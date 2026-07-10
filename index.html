@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SafeAd AI: A Multimodal Trust and Safety Framework for Early Detection of Harmful Advertisements and Age-Aware Content Moderation on Social Media.">
+    <title>SafeAd AI - Multimodal Trust and Safety Framework</title>
+    
+    <!-- Custom Style Sheet -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Sticky Header & Navigation -->
+    <header id="main-header">
+        <div class="navbar">
+            <a href="#" class="logo">
+                <div class="logo-icon"></div>
+                <span>SafeAd <span class="gradient-text">AI</span></span>
+            </a>
+            <ul class="nav-links" id="nav-menu">
+                <li><a href="#overview" class="active">Overview</a></li>
+                <li><a href="#pipeline">Pipeline</a></li>
+                <li><a href="#datasets">Datasets</a></li>
+                <li><a href="#playground">Playground</a></li>
+                <li><a href="#publications">Publications</a></li>
+                <li><a href="#team">Team</a></li>
+            </ul>
+            <a href="#playground" class="cta-button">Launch Demo</a>
+            <button class="mobile-nav-toggle" id="menu-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <h1>
+                        Age-Aware & Multimodal <br>
+                        <span class="gradient-text-primary">Ad Safety Platform</span>
+                    </h1>
+                    <p>
+                        SafeAd AI is a unified trust and safety framework integrating Computer Vision, NLP, OCR, and explainable AI to evaluate ads pre-publication. Catch scams, explicit themes, and age misrepresentations automatically.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="#playground" class="btn-primary">
+                            <i class="fa-solid fa-play"></i> Try Ad Analyzer
+                        </a>
+                        <a href="#overview" class="btn-secondary">
+                            Explore Framework <i class="fa-solid fa-arrow-down"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image-container">
+                    <div class="hero-visual">
+                        <img src="assets/hero_bg.png" alt="SafeAd AI Abstract Visualization">
+                        <div class="hero-badge-overlay">
+                            <div class="pulse-indicator"></div>
+                            <div class="hero-badge-text">
+                                <h4>Proactive Content Filter</h4>
+                                <p>Pre-publication trust assessment active</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section id="overview" class="glass-bg-accent">
+        <div class="container">
+            <div class="section-header">
+                <h2>Project Overview & <span class="gradient-text">Motivation</span></h2>
+                <p>Social media advertising is booming, making the manual detection of malicious, deceptive, and age-inappropriate ads extremely challenging.</p>
+            </div>
+            
+            <div class="overview-grid">
+                <div class="overview-cards">
+                    <div class="overview-card glass">
+                        <div class="card-icon">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Multimodal Evasion Shield</h3>
+                            <p>Traditional safety filters fail when text and images are harmless individually but harmful combined. SafeAd AI performs unified multimodal semantic reasoning to block evasive ads.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="overview-card glass">
+                        <div class="card-icon">
+                            <i class="fa-solid fa-child"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Age-Aware Restrictions</h3>
+                            <p>Integrates advanced age-confidence indicators and user age-verification models to prevent adult-targeted advertising (alcohol, vaping, gambling) from slipping through to minors.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="overview-card glass">
+                        <div class="card-icon">
+                            <i class="fa-solid fa-brain"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Explainable AI (XAI)</h3>
+                            <p>Instead of opaque binary decisions, the framework provides transparent risk metrics and detailed policy violation explanations using advanced language generation rules (inspired by HatReD).</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="overview-right-content">
+                    <h3 class="gradient-text" style="font-size: 1.8rem; margin-bottom: 1.5rem;">Problem Statement</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem; border-left: 3px solid #7f00ff; padding-left: 1.5rem;">
+                        "Development of a multi-modal AI-based trust and safety framework for social media platforms that detects harmful advertisements and performs age-aware content moderation by integrating visual, textual, and contextual information to prevent inappropriate content from reaching users."
+                    </p>
+                    <h3 style="font-size: 1.4rem; margin-bottom: 1rem;">Key Objectives</h3>
+                    <ul style="color: var(--text-secondary); list-style-position: inside; display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.95rem;">
+                        <li><strong style="color: white;">Multimodal Pipeline:</strong> Fuse graphic OCR, visual features, and NLP contexts into a central assessment matrix.</li>
+                        <li><strong style="color: white;">Proactive Filtering:</strong> Intercept fraud, explicit themes, and scams pre-publication.</li>
+                        <li><strong style="color: white;">Age Confidence Analysis:</strong> Prevent age misrepresentation issues from exposing minors to adult marketing.</li>
+                        <li><strong style="color: white;">Human-in-the-Loop (HITL):</strong> Route borderline violations to manual queues to optimize reviewer workloads.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Framework Pipeline Section -->
+    <section id="pipeline">
+        <div class="container">
+            <div class="section-header">
+                <h2>Framework <span class="gradient-text">Architecture</span></h2>
+                <p>How SafeAd AI digests, analyzes, and decides on social media advertisements in real-time.</p>
+            </div>
+            
+            <div class="pipeline-timeline">
+                
+                <div class="pipeline-step">
+                    <div class="pipeline-number">1</div>
+                    <div class="pipeline-step-content glass">
+                        <h3>Input Ingestion & Metadata <span>Module I</span></h3>
+                        <p>The advertiser submits the ad creative, including the graphic file (image/video), text copy, target audience demographics (configured age range, location), and advertising category metadata.</p>
+                    </div>
+                </div>
+                
+                <div class="pipeline-step">
+                    <div class="pipeline-number">2</div>
+                    <div class="pipeline-step-content glass">
+                        <h3>Multimodal Feature Extraction <span>Module II</span></h3>
+                        <p>SafeAd AI activates parallel extractors:
+                            <br>• <strong>Optical Character Recognition (OCR)</strong>: Pulls embedded graphic text out of the image.
+                            <br>• <strong>Computer Vision (CV)</strong>: Detects restricted items, logos, and visual metaphors.
+                            <br>• <strong>NLP Encoder</strong>: Analyzes ad copy semantics, sentiment, and intent.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="pipeline-step">
+                    <div class="pipeline-number">3</div>
+                    <div class="pipeline-step-content glass">
+                        <h3>Age-Confidence Engine <span>Module III</span></h3>
+                        <p>Validates targeting compliance. It checks if the ad promotes age-restricted services/products (alcohol, financial products, vaping) and computes an age-appropriateness confidence score based on the extracted visual/textual semantic features.</p>
+                    </div>
+                </div>
+                
+                <div class="pipeline-step">
+                    <div class="pipeline-number">4</div>
+                    <div class="pipeline-step-content glass">
+                        <h3>Explainable AI (XAI) Decider <span>Module IV</span></h3>
+                        <p>Integrates the extracted features into a decision matrix. Utilizing reasoning heuristics derived from the <strong>HatReD</strong> paradigm, it outputs an overall Risk Score (0-100%) and generates a detailed, natural language explanation detailing which platform policies are violated.</p>
+                    </div>
+                </div>
+                
+                <div class="pipeline-step">
+                    <div class="pipeline-number">5</div>
+                    <div class="pipeline-step-content glass">
+                        <h3>Human-in-the-Loop (HITL) Queue <span>Module V</span></h3>
+                        <p>If the risk score lies in the borderline range (e.g. 40-70% uncertainty), the ad is temporarily held and routed to a prioritized human moderation queue, complete with the XAI-generated policy flags to accelerate manual review.</p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Datasets Section -->
+    <section id="datasets" class="glass-bg-accent">
+        <div class="container">
+            <div class="section-header">
+                <h2>Evaluation & <span class="gradient-text">Reference Datasets</span></h2>
+                <p>SafeAd AI is grounded on the state-of-the-art multimodal dataset benchmarks mentioned in our base paper, helping the model learn implicit semantic violations.</p>
+            </div>
+            
+            <div class="datasets-grid">
+                
+                <!-- Dataset Card 1: FHM -->
+                <div class="dataset-card glass" onclick="toggleDataset(this)">
+                    <div class="dataset-header">
+                        <div class="dataset-badge">Classification</div>
+                        <div class="dataset-stats-wrapper">
+                            <div class="dataset-stats">10,000+</div>
+                            <div class="dataset-stats-label">Images</div>
+                        </div>
+                    </div>
+                    <div class="dataset-body">
+                        <h3>Facebook Hateful Memes (FHM)</h3>
+                        <p>Created by Meta AI, this dataset uses custom-built memes with visual and textual confounders, making isolated text or image analysis insufficient.</p>
+                    </div>
+                    <div class="dataset-expanded-details">
+                        <div class="dataset-expanded-content">
+                            <div class="detail-section">
+                                <h4>Key Challenge Addressed</h4>
+                                <p>Multimodal confounding. For example, an image of a skunk is harmless; the text "something smells bad here" is harmless. Combined, they target a group of people, making it hateful. SafeAd AI uses FHM-style reasoning to prevent ads from hiding scams or hate in visual metaphors.</p>
+                            </div>
+                            <div class="detail-section">
+                                <h4>Example Representation</h4>
+                                <div class="meme-example-box">
+                                    <div class="meme-example-split">
+                                        <div class="meme-mock-img"><i class="fa-solid fa-desert"></i></div>
+                                        <div class="meme-example-info">
+                                            <div class="meme-text-block">"Look at all these immigrants coming over"</div>
+                                            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top:0.25rem;">(Image of a desert. Multimodal fusion detects xenophobic context by combining sand/crossing visual cues with text.)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dataset Card 2: MAMI -->
+                <div class="dataset-card glass" onclick="toggleDataset(this)">
+                    <div class="dataset-header">
+                        <div class="dataset-badge">Multi-Label</div>
+                        <div class="dataset-stats-wrapper">
+                            <div class="dataset-stats">10,000</div>
+                            <div class="dataset-stats-label">Memes</div>
+                        </div>
+                    </div>
+                    <div class="dataset-body">
+                        <h3>MAMI Dataset (SemEval 2022)</h3>
+                        <p>Multimedia Automatic Misogyny Identification dataset dedicated to detecting misogynous content, shaming, stereotypes, objectification, and violence.</p>
+                    </div>
+                    <div class="dataset-expanded-details">
+                        <div class="dataset-expanded-content">
+                            <div class="detail-section">
+                                <h4>Key Challenge Addressed</h4>
+                                <p>Multi-label classification of gender-based harassment. Useful for enforcing platform advertising rules regarding hate speech, graphic violence, and harassment targeting specific genders.</p>
+                            </div>
+                            <div class="detail-section">
+                                <h4>Example Representation</h4>
+                                <div class="meme-example-box">
+                                    <div class="meme-example-split">
+                                        <div class="meme-mock-img"><i class="fa-solid fa-person-dress"></i></div>
+                                        <div class="meme-example-info">
+                                            <div class="meme-text-block">"Get back in the kitchen where you belong"</div>
+                                            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top:0.25rem;">(Targeted stereotype violation. Explicitly detected and categorized under misogyny/stereotype labels.)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dataset Card 3: HarMeme -->
+                <div class="dataset-card glass" onclick="toggleDataset(this)">
+                    <div class="dataset-header">
+                        <div class="dataset-badge">Harm Intensity</div>
+                        <div class="dataset-stats-wrapper">
+                            <div class="dataset-stats">3,544</div>
+                            <div class="dataset-stats-label">Twitter Memes</div>
+                        </div>
+                    </div>
+                    <div class="dataset-body">
+                        <h3>HarMeme (COVID-19 Harm)</h3>
+                        <p>Real-world dataset collected from Twitter analyzing Covid-19 misinformation, classification of harm intensity (harmless, partially, very harmful) and targeted groups.</p>
+                    </div>
+                    <div class="dataset-expanded-details">
+                        <div class="dataset-expanded-content">
+                            <div class="detail-section">
+                                <h4>Key Challenge Addressed</h4>
+                                <p>Misinformation and harm severity detection. SafeAd AI utilizes harm-intensity metrics to separate benign political criticism from harmful health scams, vaccine misinformation, and societal scaremongering.</p>
+                            </div>
+                            <div class="detail-section">
+                                <h4>Example Representation</h4>
+                                <div class="meme-example-box">
+                                    <div class="meme-example-split">
+                                        <div class="meme-mock-img"><i class="fa-solid fa-syringe"></i></div>
+                                        <div class="meme-example-info">
+                                            <div class="meme-text-block">"The microchips are ready, get your vaccine!"</div>
+                                            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top:0.25rem;">(COVID-19 related conspiracy. Labeled as partially/very harmful due to health misinformation.)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dataset Card 4: HatReD -->
+                <div class="dataset-card glass" onclick="toggleDataset(this)">
+                    <div class="dataset-header">
+                        <div class="dataset-badge">Generative XAI</div>
+                        <div class="dataset-stats-wrapper">
+                            <div class="dataset-stats">3,000+</div>
+                            <div class="dataset-stats-label">Explanations</div>
+                        </div>
+                    </div>
+                    <div class="dataset-body">
+                        <h3>HatReD (Hateful memes with Reasons)</h3>
+                        <p>Hateful memes with Reasons Dataset, annotating implicit hateful metaphors with the underlying contextual socio-cultural reasons.</p>
+                    </div>
+                    <div class="dataset-expanded-details">
+                        <div class="dataset-expanded-content">
+                            <div class="detail-section">
+                                <h4>Key Challenge Addressed</h4>
+                                <p>Interpretability in moderation. Rather than just returning "Hate" or "Not Hate", the dataset trains models to write explanations of the metaphors. This directly powers the Explainable AI (XAI) engine in SafeAd AI, giving human reviewers transparent justifications.</p>
+                            </div>
+                            <div class="detail-section">
+                                <h4>Example Representation</h4>
+                                <div class="meme-example-box">
+                                    <div class="meme-example-split">
+                                        <div class="meme-mock-img"><i class="fa-solid fa-bomb"></i></div>
+                                        <div class="meme-example-info">
+                                            <div class="meme-text-block">"Haven't heard you're not halal?"</div>
+                                            <div class="meme-reason-block">
+                                                <strong>XAI Reason:</strong> "The meme combines a cartoon Muslim figure carrying a bomb with a threatening text. This metaphorically associates Muslims with terrorism, violating religious safety guidelines."
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <p style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-top: 2rem;">
+                *Note: Click on any card above to expand and explore the dataset details and examples.
+            </p>
+        </div>
+    </section>
+
+    <!-- Playground Section -->
+    <section id="playground">
+        <div class="container">
+            <div class="section-header">
+                <h2>Interactive <span class="gradient-text">Trust & Safety Playground</span></h2>
+                <p>Run simulated ad creatives through the SafeAd AI pipeline. Select a template below or write your own ad details to test the engine.</p>
+            </div>
+            
+            <div class="playground-grid">
+                
+                <!-- Ad Creator (Inputs) -->
+                <div class="ad-creator-box glass">
+                    <h3>Ad Creative Details</h3>
+                    
+                    <!-- Preloaded templates -->
+                    <div class="ad-templates-selector">
+                        <label>Select Threat Template</label>
+                        <div class="template-chips">
+                            <button class="template-chip active" onclick="loadTemplate('crypto')">Crypto Scam</button>
+                            <button class="template-chip" onclick="loadTemplate('vape')">Underage Vape Ad</button>
+                            <button class="template-chip" onclick="loadTemplate('misogyny')">Hate Speech Ad</button>
+                            <button class="template-chip" onclick="loadTemplate('safe')">Safe Coffee Ad</button>
+                        </div>
+                    </div>
+                    
+                    <form id="ad-analyzer-form" onsubmit="runAdAnalysis(event)">
+                        <!-- Text Input -->
+                        <div class="form-group">
+                            <label for="ad-text">Ad Headline & Copy</label>
+                            <textarea id="ad-text" rows="3" class="form-control" placeholder="Enter headline and advertisement text copy..."></textarea>
+                        </div>
+                        
+                        <!-- Visual elements tag list -->
+                        <div class="form-group">
+                            <label for="ad-visuals">Visual Creative Elements (comma separated)</label>
+                            <input type="text" id="ad-visuals" class="form-control" placeholder="e.g. money stack, luxury car, smoking device...">
+                        </div>
+                        
+                        <div class="form-row">
+                            <!-- Target Age Group -->
+                            <div class="form-group">
+                                <label for="ad-target-age">Target Min Age</label>
+                                <input type="number" id="ad-target-age" class="form-control" min="1" max="99" value="13">
+                            </div>
+                            
+                            <!-- Ad Category -->
+                            <div class="form-group">
+                                <label for="ad-category">Category</label>
+                                <select id="ad-category" class="form-control">
+                                    <option value="finance">Financial Services & Crypto</option>
+                                    <option value="beverage">Beverage & Vaping</option>
+                                    <option value="dating">Dating & Social Networking</option>
+                                    <option value="commercial">Retail & Local Services</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="analyze-btn-container">
+                            <button type="submit" class="btn-analyze">
+                                <i class="fa-solid fa-magnifying-glass-chart"></i> Run SafeAd AI Pipeline
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Ad Analyzer Dashboard (Outputs) -->
+                <div class="dashboard-box glass" id="dashboard">
+                    <!-- Loader Overlay -->
+                    <div class="dashboard-loader-overlay" id="loader">
+                        <div class="loader-spinner"></div>
+                        <h4 style="margin-bottom: 1rem; color: #00F2FE;">Processing Ad Creative</h4>
+                        <div class="loader-status-list">
+                            <div class="loader-status-item" id="status-ocr"><i></i> Running Graphic OCR...</div>
+                            <div class="loader-status-item" id="status-cv"><i></i> Analyzing Visual Threat Vectors...</div>
+                            <div class="loader-status-item" id="status-age"><i></i> Checking Age-Appropriateness...</div>
+                            <div class="loader-status-item" id="status-xai"><i></i> Generating Explainable AI Report...</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Dashboard Content -->
+                    <div class="dashboard-header">
+                        <div class="dashboard-title-area">
+                            <h3><i class="fa-solid fa-server" style="color: #00F2FE;"></i> Trust Dashboard</h3>
+                            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.15rem;">ID: SA-9842A1 (PROACTIVE EVALUATION)</p>
+                        </div>
+                        <div class="decision-badge rejected" id="result-decision">REJECTED</div>
+                    </div>
+                    
+                    <div class="dashboard-overview-row">
+                        <!-- Risk Gauge -->
+                        <div class="gauge-wrapper">
+                            <div class="gauge-container">
+                                <svg class="gauge-svg" width="140" height="140" viewBox="0 0 140 140">
+                                    <circle class="gauge-bg" cx="70" cy="70" r="65"></circle>
+                                    <circle class="gauge-fill" cx="70" cy="70" r="65" id="result-gauge"></circle>
+                                </svg>
+                                <div class="gauge-text">
+                                    <div class="gauge-value" id="result-score">85%</div>
+                                    <div class="gauge-label">Risk Index</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Policy Violations List -->
+                        <div class="violations-container">
+                            <h4>Policy Violations Check</h4>
+                            <div class="violations-list">
+                                <div class="violation-item">
+                                    <span>Deceptive Marketing / Scams</span>
+                                    <span class="violation-status flagged" id="v-deceptive">FLAGGED</span>
+                                </div>
+                                <div class="violation-item">
+                                    <span>Age Restriction Compliance</span>
+                                    <span class="violation-status clean" id="v-age">CLEAN</span>
+                                </div>
+                                <div class="violation-item">
+                                    <span>Hate Speech & Harassment</span>
+                                    <span class="violation-status clean" id="v-hate">CLEAN</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Pipeline detailed blocks -->
+                    <div class="pipeline-results-container">
+                        <!-- OCR Extract -->
+                        <div class="result-block">
+                            <h4>Extracted Graphic OCR Text</h4>
+                            <div class="ocr-result-output" id="result-ocr">NO GRAPHIC TEXT DETECTED</div>
+                        </div>
+                        
+                        <!-- Age Analytics -->
+                        <div class="result-block">
+                            <h4>Age-Confidence Analytics</h4>
+                            <div class="age-analytics-block">
+                                <div class="age-stat-card">
+                                    <div class="label">Min Target Age Set</div>
+                                    <div class="val" id="result-target-age">13 Yrs</div>
+                                </div>
+                                <div class="age-stat-card">
+                                    <div class="label">Appropriateness Score</div>
+                                    <div class="val" style="color: #10b981;" id="result-age-compliance">92% (High)</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- XAI Explainable reasons (HatReD style) -->
+                        <div class="result-block">
+                            <h4>Policy Decision Analysis</h4>
+                            <div class="xai-explanation-box">
+                                <p class="xai-explanation-text" id="result-explanation">
+                                    The advertisement incorporates key deceptive triggers. Visual objects (money stack, luxury car) matched with high-yield financial promises ('Guaranteed 10x ROI overnight') represent a known template of cryptocurrency scams. Highly recommended to reject to prevent user financial harm.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- HITL routing alert -->
+                        <div class="hitl-alert-box" id="result-hitl-box" style="display: none;">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            <span>Decision Uncertainty is high. Creative has been routed to the Human-in-the-Loop priority queue.</span>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Publications / References -->
+    <section id="publications" class="glass-bg-accent">
+        <div class="container">
+            <div class="section-header">
+                <h2>Publications & <span class="gradient-text">References</span></h2>
+                <p>Explore the research and reviews underlying the SafeAd AI multimodal trust and safety project.</p>
+            </div>
+            
+            <!-- Base Paper -->
+            <div class="publication-card glass">
+                <div class="pub-flex">
+                    <div class="pub-icon-wrapper">
+                        <i class="fa-regular fa-file-pdf" style="color: #ef4444;"></i>
+                    </div>
+                    <div class="pub-content">
+                        <h3>Base Research Paper</h3>
+                        <div class="pub-meta">IEEE Transactions on Circuits and Systems for Video Technology (TCSVT) • Sept. 2025</div>
+                        <p class="pub-desc">
+                            <strong>"Few-Shot In-Context Learning for Implicit Semantic Multimodal Content Detection and Interpretation"</strong>
+                            <br>Details the few-shot in-context learning framework using socio-cultural knowledge bases and representative case retrieval to detect implicit multimodal metaphors, serving as the core mathematical foundation for our ad safety pipeline.
+                        </p>
+                        <div class="pub-actions">
+                            <a href="./Few-Shot_In-Context_Learning_for_Implicit_Semantic_Multimodal_Content_Detection_and_Interpretation.pdf" target="_blank" class="btn-primary" style="padding: 0.6rem 1.2rem; font-size: 0.9rem;">
+                                <i class="fa-solid fa-download"></i> Download PDF
+                            </a>
+                            <button onclick="toggleBibtex()" class="btn-secondary" style="padding: 0.6rem 1.2rem; font-size: 0.9rem;">
+                                <i class="fa-solid fa-quote-right"></i> Cite Reference
+                            </button>
+                        </div>
+                        <div class="bibtex-box" id="bibtex-block">
+@article{wang2025fewshot,
+  author={Wang, Xiuxian and Wang, Lanjun and Su, Yuting and Tian, Hongshuo and Jin, Guoqing and Liu, An-An},
+  journal={IEEE Transactions on Circuits and Systems for Video Technology}, 
+  title={Few-Shot In-Context Learning for Implicit Semantic Multimodal Content Detection and Interpretation}, 
+  year={2025},
+  volume={35},
+  number={9},
+  pages={9545-9559},
+  doi={10.1109/TCSVT.2025.3550900}
+}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project PPT review -->
+            <div class="publication-card glass">
+                <div class="pub-flex">
+                    <div class="pub-icon-wrapper">
+                        <i class="fa-regular fa-file-powerpoint" style="color: #f59e0b;"></i>
+                    </div>
+                    <div class="pub-content">
+                        <h3>SafeAd AI Presentation Review</h3>
+                        <div class="pub-meta">Department of Computer Science and Engineering • July 9, 2026</div>
+                        <p class="pub-desc">
+                            <strong>"SafeAd AI: A Multimodal Trust and Safety Framework for Social Media"</strong>
+                            <br>Slides summarizing our project scope, objectives (Multimodal Pipeline, Proactive Ad Filtering, Age-Confidence Analytics, transparent XAI, and HITL moderation), alignment with UN SDGs, and academic bibliography.
+                        </p>
+                        <div class="pub-actions">
+                            <a href="./SafeAd_Zero_ppt group10_review.pdf" target="_blank" class="btn-primary" style="padding: 0.6rem 1.2rem; font-size: 0.9rem; background: var(--grad-secondary); box-shadow: var(--glow-cyan);">
+                                <i class="fa-solid fa-download"></i> Download PPT Review
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Team Showcase -->
+    <section id="team">
+        <div class="container">
+            <div class="section-header">
+                <h2>Project <span class="gradient-text">Team & Affiliation</span></h2>
+                <p>Developed by Group 10 (CT 27) as part of our academic milestones.</p>
+            </div>
+            
+            <div class="team-grid">
+                
+                <div class="team-card glass">
+                    <div class="team-avatar"><i class="fa-solid fa-user-tie"></i></div>
+                    <h3>Joseph Benedict</h3>
+                    <p>B23CS2136</p>
+                    <div class="team-links">
+                        <a href="#" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                    </div>
+                </div>
+
+                <div class="team-card glass">
+                    <div class="team-avatar"><i class="fa-solid fa-user-tie"></i></div>
+                    <h3>Juwel Jokesh</h3>
+                    <p>B23CS2138</p>
+                    <div class="team-links">
+                        <a href="#" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                    </div>
+                </div>
+
+                <div class="team-card glass">
+                    <div class="team-avatar"><i class="fa-solid fa-user-tie"></i></div>
+                    <h3>RD Sourav</h3>
+                    <p>B23CS2151</p>
+                    <div class="team-links">
+                        <a href="#" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                    </div>
+                </div>
+
+                <div class="team-card glass">
+                    <div class="team-avatar"><i class="fa-solid fa-user-tie"></i></div>
+                    <h3>Sooraj Jose George</h3>
+                    <p>B23CS2160</p>
+                    <div class="team-links">
+                        <a href="#" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                    </div>
+                </div>
+
+            </div>
+            
+            <!-- Guide Section -->
+            <div class="guide-box glass">
+                <div class="team-avatar" style="width: 70px; height: 70px; font-size: 1.8rem; background: var(--grad-secondary); border-color: transparent;"><i class="fa-solid fa-chalkboard-user"></i></div>
+                <h3>Dr. Neena Raj N R</h3>
+                <p style="color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase;">Project Guide</p>
+                <p style="font-size: 0.95rem; margin-top: 0.5rem; color: var(--text-secondary);">
+                    Assistant Professor, Dept. of Computer Science and Engineering <br>
+                    Mar Baselios College of Engineering & Technology
+                </p>
+            </div>
+
+            <!-- UN SDGs Alignment -->
+            <div class="sdgs-row">
+                <div class="sdg-badge sdg-3">
+                    <div class="sdg-num num-3">3</div>
+                    <div class="sdg-text">
+                        <h4>Good Health</h4>
+                        <p>Protects minor mental health from predatory ads</p>
+                    </div>
+                </div>
+                <div class="sdg-badge sdg-9">
+                    <div class="sdg-num num-9">9</div>
+                    <div class="sdg-text">
+                        <h4>Innovation</h4>
+                        <p>Applies state-of-the-art multimodal XAI architecture</p>
+                    </div>
+                </div>
+                <div class="sdg-badge sdg-16">
+                    <div class="sdg-num num-16">16</div>
+                    <div class="sdg-text">
+                        <h4>Strong Institutions</h4>
+                        <p>Fights online deepfakes, scams, and hate speech</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>© 2026 SafeAd AI. Prepared for Department of Computer Science and Engineering.</p>
+            <p style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--text-muted);">
+                Hosted via <a href="#" target="_blank">GitHub Pages</a> • Academic Project Showcase.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Interactive Script -->
+    <script src="script.js"></script>
+</body>
+</html>
