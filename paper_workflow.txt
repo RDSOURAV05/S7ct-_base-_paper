@@ -1,0 +1,70 @@
+================================================================================
+SAFEAD AI / BASE PAPER WORKFLOW:
+Few-Shot In-Context Learning for Implicit Semantic Multimodal Content Detection
+================================================================================
+
+This document describes the step-by-step workflow of the framework proposed in the 
+base research paper: "Few-Shot In-Context Learning for Implicit Semantic 
+Multimodal Content Detection and Interpretation" (Wang et al., 2025).
+
+The core objective is to detect and explain implicit metaphorical meaning (e.g., 
+hateful memes) where visual and textual elements are harmless individually but 
+toxic when combined. It accomplishes this in 4 main stages without fine-tuning 
+or training the underlying Multimodal Large Language Model (MLLM).
+
+--------------------------------------------------------------------------------
+STAGE 1: SOCIO-CULTURAL KNOWLEDGE ACQUISITION (Generative Search)
+--------------------------------------------------------------------------------
+Memes often rely on socio-cultural references (memes about politicians, events, 
+religion, or specific communities) that standard models do not know.
+1. The system extracts visual objects (via object detection) and combines them 
+   with the meme's text copy.
+2. It generates search queries using ChatGPT to perform web searches (via Google Search API) 
+   and summarizes background information about those visual/textual targets.
+3. OUTPUT: Socio-Cultural Knowledge (SCK) explaining who/what the visual objects 
+   and references represent.
+
+--------------------------------------------------------------------------------
+STAGE 2: SOCIO-CULTURAL RELEVANCE ASSESSMENT
+--------------------------------------------------------------------------------
+Not all visual details or words are relevant to the metaphorical message.
+1. The system evaluates the semantic alignment (the "tenor") between the visual 
+   objects and the textual content.
+2. It computes a Socio-Cultural Relevance Score (SCRS).
+3. Highly relevant objects are kept; irrelevant elements (background noise) are 
+   discarded, reducing prompt noise for the MLLM.
+
+--------------------------------------------------------------------------------
+STAGE 3: REPRESENTATIVE CASE RETRIEVAL (In-Context Learning Exemplars)
+--------------------------------------------------------------------------------
+Instead of training, the framework uses "few-shot in-context learning" by 
+retrieving relevant examples to guide the model.
+1. The framework uses a pre-annotated dataset of memes (e.g., HatReD, which 
+   contains memes and human explanations of why they are hateful) as a 
+   Knowledge Base (Bck).
+2. It uses a ResNet50 model (trained on FHM, MAMI, and HarM datasets) to extract 
+   decision logic and index features.
+3. Using a FAISS vector database, it retrieves the top-K "Representative Cases" 
+   (RC) that share the same decision logic as the input meme.
+4. OUTPUT: Example memes with their corresponding human-annotated metaphorical reasons.
+
+--------------------------------------------------------------------------------
+STAGE 4: MULTIMODAL DETECTION & INTERPRETATION (Chain of Thought)
+--------------------------------------------------------------------------------
+1. The framework constructs a structured Chain-of-Thought (CoT) prompt.
+2. The prompt includes:
+   • The input meme (image + text)
+   • Retrieved Representative Cases (RC)
+   • Socio-Cultural Knowledge (SCK)
+   • Socio-Cultural Relevance Scores (SCRS)
+3. This prompt is fed into a Multimodal Large Language Model (e.g., GPT-4, 
+   Qwen-VL-Max, or Spark-VL).
+4. Guided by the CoT, the model reasons step-by-step:
+   • Analyzes visual/textual associations
+   • Maps the metaphorical pattern from the representative cases
+   • Performs the final detection
+5. OUTPUT:
+   • Classification decision (0 = Non-Hate, 1 = Hateful)
+   • Structured natural language explanation (describing the metaphor and why 
+     it violates safety rules, inspired by the HatReD dataset paradigm)
+================================================================================
