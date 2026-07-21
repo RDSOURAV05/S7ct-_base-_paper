@@ -149,9 +149,9 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Load default template (crypto) on launch
-    loadTemplate('crypto');
-    updateDashboard(templates['crypto']);
+    // Load default template (fhm) on launch
+    loadTemplate('fhm');
+    updateDashboard(templates['fhm']);
 });
 
 // --- Handle Image Upload & Tesseract.js OCR ---
@@ -356,116 +356,113 @@ function removeUploadedImage(event) {
 
 // --- Playground Threat Templates Definition ---
 const templates = {
-    crypto: {
-        text: "🚀 GUARANTEED 10x ROI IN 24 HOURS! 🚀 Don't let your hard-earned money sit idle. Invest in SafeAdCoin now and watch your wealth skyrocket overnight! No risk, 100% high returns, invite-only opportunity! Join our Telegram group now. #Crypto #Invest #Rich #ROI",
-        visuals: "stack of gold coins, luxury sports car, private jet cockpit, green upward trend chart",
+    fhm: {
+        text: "Look how many people are getting rich! Click now to join the elite group.",
+        visuals: "stacks of cash, smiling people, luxury background",
         targetAge: 18,
         category: "finance",
-        riskScore: 92,
+        riskScore: 88,
         decision: "REJECTED",
         deceptive: "FLAGGED",
         ageCompliance: "CLEAN",
         hateSpeech: "CLEAN",
-        ocrText: "INVEST NOW - 100% GUARANTEED RETURN",
-        explanation: "High Risk of Scam detected. The creative matches known templates of cryptocurrency scams. Visual indicators (luxury items, cash piles) combined with deceptive keywords ('10X ROI', 'Guaranteed return') violate advertising policy regarding misleading financial claims.",
+        ocrText: "JOIN THE 1% - GUARANTEED RETURN",
+        explanation: "FHM Confounder Detected. The ad uses high-value visual confounders (stacks of cash) combined with deceptive keywords ('Guaranteed return') to mislead users. This represents a typical FHM-style adversarial multimodal mismatch.",
         // Fig. 3 Architecture Nodes
-        blipCaption: "A stack of gold coins beside a luxury sports car and a private jet on a runway.",
-        nerEntities: ["SafeAdCoin", "Telegram", "Crypto", "ROI"],
-        yoloObjects: ["gold coins", "sports car", "jet cockpit", "trend chart"],
-        sckContext: "Socio-Cultural Knowledge (K): Visual displays of extravagant wealth (jets, cars) combined with urgent high-yield financial promises ('10x ROI', 'guaranteed') constitute a recognized template of deceptive investment fraud.",
+        blipCaption: "A group of smiling people standing around stacks of cash.",
+        nerEntities: ["FHM Dataset", "Multimodal Confounder", "Financial Claims"],
+        yoloObjects: ["cash stacks", "smiling people"],
+        sckContext: "Socio-Cultural Knowledge (K): The FHM dataset utilizes multimodal confounders where benign visual objects (smiling people) are combined with misleading texts to trigger deceptive patterns.",
         relevanceScores: [
-            { entity: "Guaranteed ROI", score: "2 (High)" },
-            { entity: "SafeAdCoin", score: "2 (High)" },
-            { entity: "Gold Coins", score: "1 (Medium)" },
-            { entity: "Sports Car", score: "1 (Medium)" }
+            { entity: "Guaranteed Return", score: "2 (High)" },
+            { entity: "Smiling People", score: "0 (Low)" }
         ],
         representativeCases: [
-            { id: "RC1 (FHM-Scam #402)", knowledge: "Deceptive Ponzi scheme targeting retail investors.", reason: "Associates luxury cars with instant overnight wealth." },
-            { id: "RC2 (HatReD-Scam #119)", knowledge: "Unlicensed crypto token presale.", reason: "Promotes artificial FOMO and fake return guarantees." }
+            { id: "RC1 (FHM-Scam #42)", knowledge: "Deceptive Ponzi scheme targeting retail investors.", reason: "Metaphorical association of stacks of cash with overnight wealth." }
         ],
-        cotTrace: "1. SCGen Search: Extracted visual objects (sports car, jet) and headline '10X GUARANTEED ROI'.\n2. SCRA-MTI Assessment: Entity 'Guaranteed ROI' scored 2 (High Relevance).\n3. RCR Search: Matched RC1 (Deceptive Ponzi template) via FAISS vector embeddings.\n4. MLLM Decision: Violation of Deceptive Marketing Policy."
+        cotTrace: "1. SCGen Search: Extracted visual confounders (cash stacks) and OCR 'JOIN THE 1%'.\n2. SCRA-MTI Assessment: Entity 'Guaranteed Return' scored 2 (High Relevance).\n3. RCR Search: Matched RC1 Ponzi template.\n4. MLLM Decision: REJECT due to Deceptive Confounder."
     },
-    vape: {
-        text: "💨 UNLEASH THE VIBE! 💨 Discover the smoothest puff with our new Ice-Mint Vape. Fits perfectly in your pocket, looks ultra-cool, and tastes amazing. Try all 12 sweet fruit flavors today! #VapeLife #SmoothPuff #Vibe",
-        visuals: "sleek colored vape pen, vapor clouds, cartoon fruit characters, energetic young group dancing",
-        targetAge: 13,
-        category: "beverage",
-        riskScore: 88,
-        decision: "REJECTED",
-        deceptive: "CLEAN",
-        ageCompliance: "FLAGGED",
-        hateSpeech: "CLEAN",
-        ocrText: "COOL PUFF - SWEET WATERMELON",
-        explanation: "Age Restriction Target Violation. The advertisement targets vaping products with sweet fruit flavors and energetic, cartoonish visual elements. The min targeted age is set to 13, which directly violates policies restricting nicotine/tobacco marketing to minors under 18/21.",
-        blipCaption: "A colorful vape pen surrounded by vapor clouds and cartoon fruit characters.",
-        nerEntities: ["Ice-Mint Vape", "VapeLife", "SmoothPuff"],
-        yoloObjects: ["vape pen", "vapor cloud", "cartoon fruit", "dancing group"],
-        sckContext: "Socio-Cultural Knowledge (K): Bright neon styling and sweet fruit flavor branding combined with youth imagery appeal directly to underage demographics, violating tobacco/e-cigarette targeting regulations.",
-        relevanceScores: [
-            { entity: "Ice-Mint Vape", score: "2 (High)" },
-            { entity: "Target Age (13)", score: "2 (High)" },
-            { entity: "Fruit Flavors", score: "1 (Medium)" },
-            { entity: "Vapor Cloud", score: "1 (Medium)" }
-        ],
-        representativeCases: [
-            { id: "RC1 (AdSafety-Minor #89)", knowledge: "Flavored nicotine e-cigarette promotion targeting youth.", reason: "Uses cartoon characters to market restricted products to teens." }
-        ],
-        cotTrace: "1. SCGen Search: Detected vape pen and cartoon fruit visual tags.\n2. SCRA-MTI Assessment: Cross-referenced target age (13) with restricted nicotine category.\n3. RCR Search: Matched RC1 (Youth nicotine targeting violation).\n4. MLLM Decision: Rejection due to Minor Protection Policy violation."
-    },
-    misogyny: {
+    mami: {
         text: "Tired of women driving? 🚗 Make sure she stays where she belongs. Get our automatic kitchen cooking helper and get your peace of mind back. Order now for your wife! #MenRule #KitchenHelper #Peace",
         visuals: "frustrated woman struggling with a steering wheel, modern clean kitchen, cartoon pointing hand",
         targetAge: 18,
         category: "dating",
-        riskScore: 76,
+        riskScore: 92,
         decision: "REJECTED",
         deceptive: "CLEAN",
         ageCompliance: "CLEAN",
         hateSpeech: "FLAGGED",
         ocrText: "KEEP HER IN THE KITCHEN",
-        explanation: "Hate Speech & Gender Bias Violation. The text copy and OCR text contain derogatory gender stereotypes ('women drivers', 'stays where she belongs', 'keep her in the kitchen'). This violates community guidelines regarding misogynistic and offensive content targeting vulnerable gender groups.",
+        explanation: "MAMI Misogyny Violation. The text copy and OCR contain derogatory gender stereotypes ('women drivers', 'stays where she belongs', 'keep her in the kitchen'), directly violating the SemEval MAMI safety benchmarks.",
         blipCaption: "A woman behind a steering wheel beside a kitchen counter.",
-        nerEntities: ["Women Drivers", "Kitchen Helper", "MenRule"],
-        yoloObjects: ["woman", "steering wheel", "kitchen", "pointing hand"],
-        sckContext: "Socio-Cultural Knowledge (K): Tropes suggesting women belong exclusively in domestic roles or cannot drive represent derogatory misogynistic stereotypes.",
+        nerEntities: ["MAMI Dataset", "Misogyny Task 5", "Gender Roles"],
+        yoloObjects: ["woman", "steering wheel", "kitchen counter"],
+        sckContext: "Socio-Cultural Knowledge (K): The MAMI benchmark targets misogynistic memes. Relegating women to domestic helper roles or mocking driver capabilities represents harmful gender stereotyping.",
         relevanceScores: [
             { entity: "stays where she belongs", score: "2 (High)" },
             { entity: "women driving", score: "2 (High)" },
-            { entity: "Kitchen", score: "1 (Medium)" }
+            { entity: "Kitchen counter", score: "1 (Medium)" }
         ],
         representativeCases: [
             { id: "RC1 (MAMI-Misogyny #214)", knowledge: "Gender stereotype meme enforcing domestic subordination.", reason: "Satirizes female competence to promote gender discrimination." }
         ],
-        cotTrace: "1. SCGen Search: Extracted gender stereotypes in text and OCR.\n2. SCRA-MTI Assessment: Evaluated metaphorical tenor (comparing women drivers to domestic tools).\n3. RCR Search: Matched MAMI dataset case RC1.\n4. MLLM Decision: Rejection under Misogyny & Hate Speech Policy."
+        cotTrace: "1. SCGen Search: Extracted gender stereotypes from MAMI task definition.\n2. SCRA-MTI Assessment: Evaluated metaphorical tenor (comparing driver to domestic tools).\n3. RCR Search: Matched MAMI case RC1.\n4. MLLM Decision: REJECT under Misogyny Policy."
     },
-    safe: {
-        text: "☕ Good Morning starts with Organic Coffee! ☕ Sourced directly from sustainable local farms, our dark roast coffee is rich, bold, and fair-trade certified. Visit our cafe or order beans online today. #CoffeeTime #Organic #Sustainable",
-        visuals: "steaming white coffee mug, roasted brown coffee beans, green leaves, wood table texture",
+    harmeme: {
+        text: "Why wear a mask? The virus is just a normal flu. Don't let them control you! Stand up for your freedom today.",
+        visuals: "medical face mask, sheep herd, warning sign",
         targetAge: 13,
         category: "commercial",
-        riskScore: 8,
-        decision: "APPROVED",
+        riskScore: 85,
+        decision: "REJECTED",
         deceptive: "CLEAN",
         ageCompliance: "CLEAN",
-        hateSpeech: "CLEAN",
-        ocrText: "ORGANIC & FRESH CAFE",
-        explanation: "Ad creative complies with all platform safety guidelines. Text and visual elements promote standard commercial products with neutral, positive sentiment and no policy violations detected.",
-        blipCaption: "A white coffee mug on a wooden table with roasted coffee beans.",
-        nerEntities: ["Organic Coffee", "Fair-Trade", "CoffeeTime"],
-        yoloObjects: ["coffee mug", "coffee beans", "leaves", "table"],
-        sckContext: "Socio-Cultural Knowledge (K): Organic coffee and fair-trade farming represent standard, benign commercial beverage marketing.",
+        hateSpeech: "FLAGGED",
+        ocrText: "DON'T BE A SHEEP - REFUSE MASKS",
+        explanation: "HarMeme Public Harm Flagged. The creative contains medical misinformation, using metaphors ('sheep herd') to discourage protective mask-wearing, violating public health guidelines verified in the COVID-19 HarMeme dataset.",
+        blipCaption: "A herd of sheep standing behind a warning sign with a face mask symbol.",
+        nerEntities: ["HarMeme Dataset", "COVID-19 Harm", "Medical Misinformation"],
+        yoloObjects: ["face mask", "sheep herd", "warning sign"],
+        sckContext: "Socio-Cultural Knowledge (K): The HarMeme dataset measures harm intensity. Equating safety compliance to 'sheep' mentality promotes public safety defiance.",
         relevanceScores: [
-            { entity: "Organic Coffee", score: "1 (Medium)" },
-            { entity: "Fair-Trade", score: "1 (Medium)" }
+            { entity: "refuse masks", score: "2 (High)" },
+            { entity: "sheep herd", score: "2 (High)" },
+            { entity: "flu", score: "1 (Medium)" }
         ],
         representativeCases: [
-            { id: "RC1 (Commercial #12)", knowledge: "Standard beverage retail advertising.", reason: "Promotes coffee beans with neutral product claims." }
+            { id: "RC1 (HarMeme-COVID #71)", knowledge: "Harmful pandemic misinformation promoting public safety defiance.", reason: "Metaphorically equates safety compliance with sheep mentality." }
         ],
-        cotTrace: "1. SCGen Search: Extracted coffee beans and mug visual tags.\n2. SCRA-MTI Assessment: No high-risk policy flags found.\n3. RCR Search: Matched safe commercial retail cases.\n4. MLLM Decision: Approved for publication."
+        cotTrace: "1. SCGen Search: Detected medical conspiracy elements and OCR 'DON'T BE A SHEEP'.\n2. SCRA-MTI Assessment: Evaluated metaphor (sheep herd vs medical mask safety).\n3. RCR Search: Matched HarMeme intensity case RC1.\n4. MLLM Decision: REJECT due to Medical HarMeme violation."
+    },
+    hatred: {
+        text: "Haven't heard you're not halal? Let's clean the environment.",
+        visuals: "cartoon figure holding a bomb, warning cross, clean landscape",
+        targetAge: 18,
+        category: "dating",
+        riskScore: 95,
+        decision: "REJECTED",
+        deceptive: "CLEAN",
+        ageCompliance: "CLEAN",
+        hateSpeech: "FLAGGED",
+        ocrText: "CLEAN THE WORLD",
+        explanation: "HatReD Hateful Metaphor Detected. The creative combines the term 'halal' with a bomb visual and environmental cleanup metaphor ('clean the environment'), indicating implicit religious hate speech and xenophobia.",
+        blipCaption: "A cartoon figure holding a bomb with a warning cross overlay.",
+        nerEntities: ["HatReD Dataset", "Explainable Hate Speech", "Implicit Metaphor"],
+        yoloObjects: ["cartoon figure", "bomb", "warning cross"],
+        sckContext: "Socio-Cultural Knowledge (K): The HatReD dataset provides detailed socio-cultural explanations of hate speech. Linking specific religious groups to violence (bombs) is an implicit xenophobic metaphor.",
+        relevanceScores: [
+            { entity: "halal", score: "2 (High)" },
+            { entity: "clean the environment", score: "2 (High)" },
+            { entity: "bomb", score: "2 (High)" }
+        ],
+        representativeCases: [
+            { id: "RC1 (HatReD #110)", knowledge: "Xenophobic religious hate speech using implicit metaphors.", reason: "Metaphorically links religious terms with terrorism." }
+        ],
+        cotTrace: "1. SCGen Search: Extracted religious triggers and bomb visual tags.\n2. SCRA-MTI Assessment: Evaluated metaphorical tenor (implicit threat of violence).\n3. RCR Search: Matched HatReD Case RC1.\n4. MLLM Decision: REJECT under Xenophobia & Hateful Metaphor Policy."
     }
 };
 
-let activeTemplate = 'crypto';
+let activeTemplate = 'fhm';
 
 // --- Load Template function ---
 function loadTemplate(key) {
