@@ -11,6 +11,9 @@
     
     <!-- Icons CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Client-Side OCR Engine (Tesseract.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4.1.1/dist/tesseract.min.js"></script>
 </head>
 <body>
 
@@ -377,6 +380,31 @@
                     </div>
                     
                     <form id="ad-analyzer-form" onsubmit="runAdAnalysis(event)">
+                        <!-- Meme / Image Upload Dropzone -->
+                        <div class="form-group">
+                            <label>Upload Meme Image Creative</label>
+                            <div class="upload-dropzone" id="dropzone">
+                                <input type="file" id="image-upload" accept="image/*" class="file-input" onchange="handleImageUpload(event)">
+                                <div class="dropzone-content" id="dropzone-prompt">
+                                    <i class="fa-solid fa-cloud-arrow-up dropzone-icon"></i>
+                                    <p><strong>Drag & Drop your meme image here</strong> or <span class="browse-link">Browse files</span></p>
+                                    <span class="file-limits">Supports PNG, JPG, WEBP, GIF</span>
+                                </div>
+                                <div class="upload-preview-container" id="preview-container" style="display: none;">
+                                    <img id="image-preview" src="" alt="Meme Preview">
+                                    <div class="preview-overlay">
+                                        <span class="preview-filename" id="preview-filename">meme.png</span>
+                                        <button type="button" class="btn-remove-image" id="btn-remove-img" onclick="removeUploadedImage(event)">
+                                            <i class="fa-solid fa-xmark"></i> Remove
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ocr-status-badge" id="ocr-badge" style="display: none;">
+                                <i class="fa-solid fa-circle-notch fa-spin"></i> <span id="ocr-status-text">Extracting embedded text via Tesseract.js...</span>
+                            </div>
+                        </div>
+
                         <!-- Text Input -->
                         <div class="form-group">
                             <label for="ad-text">Ad Headline & Copy</label>
@@ -476,6 +504,15 @@
                     
                     <!-- Pipeline detailed blocks -->
                     <div class="pipeline-results-container">
+                        <!-- Meme Image Display Card -->
+                        <div class="result-block">
+                            <h4>Analyzed Meme Creative</h4>
+                            <div class="dashboard-meme-preview-box">
+                                <img id="dashboard-meme-img" src="assets/hero_bg.png" alt="Analyzed Meme Preview">
+                                <div class="meme-analysis-overlay" id="meme-overlay-tag">TEMPLATE LOADED</div>
+                            </div>
+                        </div>
+
                         <!-- OCR Extract -->
                         <div class="result-block">
                             <h4>Extracted Graphic OCR Text</h4>

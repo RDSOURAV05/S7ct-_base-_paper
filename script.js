@@ -93,6 +93,135 @@ function toggleBibtex() {
     }
 }
 
+// --- Global Image Upload State ---
+let uploadedImageDataUrl = null;
+let uploadedOcrText = null;
+
+// --- Drag & Drop Event Listeners ---
+window.addEventListener('DOMContentLoaded', () => {
+    const dropzone = document.getElementById('dropzone');
+    if (dropzone) {
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropzone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                dropzone.classList.add('drag-over');
+            }, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropzone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                dropzone.classList.remove('drag-over');
+            }, false);
+        });
+
+        dropzone.addEventListener('drop', (e) => {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            if (files && files.length > 0) {
+                const fileInput = document.getElementById('image-upload');
+                fileInput.files = files;
+                handleImageUpload({ target: fileInput });
+            }
+        });
+    }
+
+    // Load default template (crypto) on launch
+    loadTemplate('crypto');
+    updateDashboard(templates['crypto']);
+});
+
+// --- Handle Image Upload & Tesseract.js OCR ---
+function handleImageUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        uploadedImageDataUrl = e.target.result;
+        
+        // Show preview in form
+        document.getElementById('image-preview').src = uploadedImageDataUrl;
+        document.getElementById('preview-filename').textContent = file.name;
+        document.getElementById('preview-container').style.display = 'flex';
+        document.getElementById('dropzone-prompt').style.display = 'none';
+        
+        // Update Dashboard Meme Preview immediately
+        const dashImg = document.getElementById('dashboard-meme-img');
+        const dashTag = document.getElementById('meme-overlay-tag');
+        if (dashImg) dashImg.src = uploadedImageDataUrl;
+        if (dashTag) dashTag.textContent = 'USER MEME UPLOADED';
+
+        // Trigger Client-Side Tesseract.js OCR
+        runTesseractOcr(uploadedImageDataUrl);
+    };
+    reader.readAsDataURL(file);
+}
+
+// --- Run Client-Side OCR with Tesseract.js ---
+function runTesseractOcr(imageSrc) {
+    const ocrBadge = document.getElementById('ocr-badge');
+    const ocrTextEl = document.getElementById('ocr-status-text');
+    
+    if (ocrBadge) ocrBadge.style.display = 'flex';
+    if (ocrTextEl) ocrTextEl.textContent = 'Extracting embedded text via Tesseract.js...';
+
+    if (typeof Tesseract !== 'undefined') {
+        Tesseract.recognize(imageSrc, 'eng', {
+            logger: m => {
+                if (m.status === 'recognizing text' && ocrTextEl) {
+                    const pct = Math.round(m.progress * 100);
+                    ocrTextEl.textContent = `Extracting embedded text via Tesseract.js (${pct}%)...`;
+                }
+            }
+        }).then(({ data: { text } }) => {
+            const cleanText = text.trim();
+            if (ocrBadge) ocrBadge.style.display = 'none';
+            
+            if (cleanText) {
+                uploadedOcrText = cleanText;
+                // Append extracted text to ad headline copy if empty or enhance it
+                const textInput = document.getElementById('ad-text');
+                if (!textInput.value || textInput.value.includes('🚀') || textInput.value.includes('💨') || textInput.value.includes('Tired of')) {
+                    textInput.value = cleanText;
+                }
+                
+                // Update visuals tag hint based on filename / text
+                const visualsInput = document.getElementById('ad-visuals');
+                if (!visualsInput.value || visualsInput.value.includes('stack of gold')) {
+                    visualsInput.value = "user uploaded image, text graphic, meme layout";
+                }
+            }
+        }).catch(err => {
+            console.error('Tesseract OCR error:', err);
+            if (ocrBadge) ocrBadge.style.display = 'none';
+        });
+    } else {
+        setTimeout(() => {
+            if (ocrBadge) ocrBadge.style.display = 'none';
+        }, 1000);
+    }
+}
+
+// --- Remove Uploaded Image ---
+function removeUploadedImage(event) {
+    if (event) event.stopPropagation();
+    
+    uploadedImageDataUrl = null;
+    uploadedOcrText = null;
+    
+    document.getElementById('image-upload').value = '';
+    document.getElementById('image-preview').src = '';
+    document.getElementById('preview-container').style.display = 'none';
+    document.getElementById('dropzone-prompt').style.display = 'flex';
+    document.getElementById('ocr-badge').style.display = 'none';
+    
+    // Reset Dashboard Meme Preview to active template image
+    loadTemplate(activeTemplate);
+}
+
 // --- Playground Threat Templates Definition ---
 const templates = {
     crypto: {
@@ -156,6 +285,17 @@ function loadTemplate(key) {
     if (!templates[key]) return;
     activeTemplate = key;
     
+    // Clear custom uploaded image if switching templates
+    if (uploadedImageDataUrl) {
+        uploadedImageDataUrl = null;
+        uploadedOcrText = null;
+        document.getElementById('image-upload').value = '';
+        document.getElementById('image-preview').src = '';
+        document.getElementById('preview-container').style.display = 'none';
+        document.getElementById('dropzone-prompt').style.display = 'flex';
+        document.getElementById('ocr-badge').style.display = 'none';
+    }
+
     // Update chip styling
     document.querySelectorAll('.template-chip').forEach(chip => {
         chip.classList.remove('active');
@@ -169,6 +309,12 @@ function loadTemplate(key) {
     document.getElementById('ad-visuals').value = templates[key].visuals;
     document.getElementById('ad-target-age').value = templates[key].targetAge;
     document.getElementById('ad-category').value = templates[key].category;
+    
+    // Set dashboard image
+    const dashImg = document.getElementById('dashboard-meme-img');
+    const dashTag = document.getElementById('meme-overlay-tag');
+    if (dashImg) dashImg.src = 'assets/hero_bg.png';
+    if (dashTag) dashTag.textContent = key.toUpperCase() + ' TEMPLATE';
 }
 
 // --- Run Ad Analysis Pipeline Simulation ---
@@ -339,8 +485,10 @@ function analyzeInputs() {
         deceptive: deceptive,
         ageCompliance: ageCompliance,
         hateSpeech: hateSpeech,
-        ocrText: ocrText || "NO GRAPHIC TEXT",
-        explanation: explanationText
+        ocrText: uploadedOcrText || ocrText || "NO GRAPHIC TEXT",
+        explanation: explanationText,
+        imageSrc: uploadedImageDataUrl || 'assets/hero_bg.png',
+        imageTag: uploadedImageDataUrl ? 'USER MEME ANALYZED' : activeTemplate.toUpperCase() + ' TEMPLATE'
     };
 }
 
@@ -406,18 +554,16 @@ function updateDashboard(results) {
     }
 }
 
+    // 10. Update Meme Image in Dashboard
+    const dashImg = document.getElementById('dashboard-meme-img');
+    const dashTag = document.getElementById('meme-overlay-tag');
+    if (dashImg && results.imageSrc) dashImg.src = results.imageSrc;
+    if (dashTag && results.imageTag) dashTag.textContent = results.imageTag;
+}
+
 function updatePolicyBadge(id, status) {
     const el = document.getElementById(id);
     if (!el) return;
     el.textContent = status;
     el.className = 'violation-status ' + status.toLowerCase();
 }
-
-// --- Window onload initialization ---
-window.addEventListener('DOMContentLoaded', () => {
-    // Load default template (crypto) on launch
-    loadTemplate('crypto');
-    
-    // Update dashboard with default values instantly (without loader animation initially)
-    updateDashboard(templates['crypto']);
-});
