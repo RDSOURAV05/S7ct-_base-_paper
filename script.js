@@ -142,9 +142,7 @@ window.addEventListener('DOMContentLoaded', () => {
             const dt = e.dataTransfer;
             const files = dt.files;
             if (files && files.length > 0) {
-                const fileInput = document.getElementById('image-upload');
-                fileInput.files = files;
-                handleImageUpload({ target: fileInput });
+                processUploadedFile(files[0]);
             }
         });
     }
@@ -157,13 +155,23 @@ window.addEventListener('DOMContentLoaded', () => {
 // --- Handle Image Upload & Tesseract.js OCR ---
 function handleImageUpload(event) {
     const file = event.target.files[0];
+    if (file) {
+        processUploadedFile(file);
+    }
+}
+
+// --- Process Uploaded File and Toggle Overlay ---
+function processUploadedFile(file) {
     if (!file) return;
 
     const reader = new FileReader();
     reader.onload = function (e) {
         uploadedImageDataUrl = e.target.result;
         
-        // Show preview in form
+        // Show preview and add active class to hide transparent input overlay
+        const dropzone = document.getElementById('dropzone');
+        if (dropzone) dropzone.classList.add('active-preview');
+        
         document.getElementById('image-preview').src = uploadedImageDataUrl;
         document.getElementById('preview-filename').textContent = file.name;
         document.getElementById('preview-container').style.display = 'flex';
@@ -175,14 +183,14 @@ function handleImageUpload(event) {
         if (dashImg) dashImg.src = uploadedImageDataUrl;
         if (dashTag) dashTag.textContent = 'USER MEME UPLOADED';
 
-        // Trigger Client-Side Tesseract.js OCR
-        runTesseractOcr(uploadedImageDataUrl);
+        // Trigger Client-Side Tesseract.js OCR with file name
+        runTesseractOcr(uploadedImageDataUrl, file.name);
     };
     reader.readAsDataURL(file);
 }
 
 // --- Run Client-Side OCR with Tesseract.js ---
-function runTesseractOcr(imageSrc) {
+function runTesseractOcr(imageSrc, fileName) {
     const ocrBadge = document.getElementById('ocr-badge');
     const ocrTextEl = document.getElementById('ocr-status-text');
     
@@ -204,8 +212,8 @@ function runTesseractOcr(imageSrc) {
             if (cleanText) {
                 uploadedOcrText = cleanText;
                 
-                // Run AI prediction based on OCR text
-                uploadedFlowData = predictAdMetadataFromOCR(cleanText, file ? file.name : 'meme.png');
+                // Run AI prediction based on OCR text and file name
+                uploadedFlowData = predictAdMetadataFromOCR(cleanText, fileName || 'meme.png');
             }
         }).catch(err => {
             console.error('Tesseract OCR error:', err);
@@ -343,6 +351,9 @@ function removeUploadedImage(event) {
     uploadedImageDataUrl = null;
     uploadedOcrText = null;
     uploadedFlowData = null;
+    
+    const dropzone = document.getElementById('dropzone');
+    if (dropzone) dropzone.classList.remove('active-preview');
     
     document.getElementById('image-upload').value = '';
     document.getElementById('image-preview').src = '';

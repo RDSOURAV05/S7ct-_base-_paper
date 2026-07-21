@@ -1427,6 +1427,10 @@ footer a {
     z-index: 5;
 }
 
+.upload-dropzone.active-preview .file-input {
+    display: none;
+}
+
 .dropzone-content {
     display: flex;
     flex-direction: column;
