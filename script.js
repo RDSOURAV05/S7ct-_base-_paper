@@ -764,12 +764,13 @@ function updateDashboard(results) {
     
     // 9. Update HITL routing alert box
     const hitlBox = document.getElementById('result-hitl-box');
-    if (results.decision === 'FLAGGED') {
-        hitlBox.style.display = 'flex';
-    } else {
-        hitlBox.style.display = 'none';
+    if (hitlBox) {
+        if (results.decision === 'FLAGGED') {
+            hitlBox.style.display = 'flex';
+        } else {
+            hitlBox.style.display = 'none';
+        }
     }
-}
 
     // 10. Update Meme Image in Dashboard
     const dashImg = document.getElementById('dashboard-meme-img');
