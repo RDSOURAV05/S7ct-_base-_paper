@@ -405,40 +405,43 @@
                             </div>
                         </div>
 
-                        <!-- Text Input -->
-                        <div class="form-group">
-                            <label for="ad-text">Ad Headline & Copy</label>
-                            <textarea id="ad-text" rows="3" class="form-control" placeholder="Enter headline and advertisement text copy..."></textarea>
-                        </div>
-                        
-                        <!-- Visual elements tag list -->
-                        <div class="form-group">
-                            <label for="ad-visuals">Visual Creative Elements (comma separated)</label>
-                            <input type="text" id="ad-visuals" class="form-control" placeholder="e.g. money stack, luxury car, smoking device...">
-                        </div>
-                        
-                        <div class="form-row">
-                            <!-- Target Age Group -->
+                        <!-- Hidden Metadata Fields (AI Autocompleted under the hood) -->
+                        <div style="display: none;">
+                            <!-- Text Input -->
                             <div class="form-group">
-                                <label for="ad-target-age">Target Min Age</label>
-                                <input type="number" id="ad-target-age" class="form-control" min="1" max="99" value="13">
+                                <label for="ad-text">Ad Headline & Copy</label>
+                                <textarea id="ad-text" rows="3" class="form-control" placeholder="Enter headline and advertisement text copy..."></textarea>
                             </div>
                             
-                            <!-- Ad Category -->
+                            <!-- Visual elements tag list -->
                             <div class="form-group">
-                                <label for="ad-category">Category</label>
-                                <select id="ad-category" class="form-control">
-                                    <option value="finance">Financial Services & Crypto</option>
-                                    <option value="beverage">Beverage & Vaping</option>
-                                    <option value="dating">Dating & Social Networking</option>
-                                    <option value="commercial">Retail & Local Services</option>
-                                </select>
+                                <label for="ad-visuals">Visual Creative Elements (comma separated)</label>
+                                <input type="text" id="ad-visuals" class="form-control" placeholder="e.g. money stack, luxury car, smoking device...">
+                            </div>
+                            
+                            <div class="form-row">
+                                <!-- Target Age Group -->
+                                <div class="form-group">
+                                    <label for="ad-target-age">Target Min Age</label>
+                                    <input type="number" id="ad-target-age" class="form-control" min="1" max="99" value="13">
+                                </div>
+                                
+                                <!-- Ad Category -->
+                                <div class="form-group">
+                                    <label for="ad-category">Category</label>
+                                    <select id="ad-category" class="form-control">
+                                        <option value="finance">Financial Services & Crypto</option>
+                                        <option value="beverage">Beverage & Vaping</option>
+                                        <option value="dating">Dating & Social Networking</option>
+                                        <option value="commercial">Retail & Local Services</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         
                         <div class="analyze-btn-container">
                             <button type="submit" class="btn-analyze">
-                                <i class="fa-solid fa-magnifying-glass-chart"></i> Check Image & Run Pipeline
+                                <i class="fa-solid fa-magnifying-glass-chart"></i> Check Meme & Show Pipeline
                             </button>
                         </div>
                     </form>
