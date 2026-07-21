@@ -1565,6 +1565,7 @@ footer a {
     border-radius: 4px;
     letter-spacing: 0.05em;
     box-shadow: 0 0 10px rgba(127, 0, 255, 0.4);
+}
 /* Dashboard Tab Switcher */
 .dashboard-tabs {
     display: flex;

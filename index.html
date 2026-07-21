@@ -47,15 +47,15 @@
             <div class="hero-grid">
                 <div class="hero-content">
                     <h1>
-                        Age-Aware & Multimodal <br>
-                        <span class="gradient-text-primary">Ad Safety Platform</span>
+                        Implicit Metaphor & <br>
+                        <span class="gradient-text-primary">Multimodal Safety Platform</span>
                     </h1>
                     <p>
-                        SafeAd AI is a unified trust and safety framework integrating Computer Vision, NLP, OCR, and explainable AI to evaluate ads pre-publication. Catch scams, explicit themes, and age misrepresentations automatically.
+                        SafeAd AI is a unified trust and safety framework implementing the base paper's <strong>Few-Shot In-Context Learning</strong> pipeline. It detects implicit metaphors where benign text and images combine to form harmful, deceptive, or age-inappropriate meanings.
                     </p>
                     <div class="hero-actions">
                         <a href="#playground" class="btn-primary">
-                            <i class="fa-solid fa-play"></i> Try Ad Analyzer
+                            <i class="fa-solid fa-play"></i> Try Meme Analyzer
                         </a>
                         <a href="#overview" class="btn-secondary">
                             Explore Framework <i class="fa-solid fa-arrow-down"></i>
@@ -68,8 +68,8 @@
                         <div class="hero-badge-overlay">
                             <div class="pulse-indicator"></div>
                             <div class="hero-badge-text">
-                                <h4>Proactive Content Filter</h4>
-                                <p>Pre-publication trust assessment active</p>
+                                <h4>Metaphor Detector</h4>
+                                <p>Fig. 3 RCR & CoT pipeline active</p>
                             </div>
                         </div>
                     </div>
@@ -83,53 +83,51 @@
         <div class="container">
             <div class="section-header">
                 <h2>Project Overview & <span class="gradient-text">Motivation</span></h2>
-                <p>Social media advertising is booming, making the manual detection of malicious, deceptive, and age-inappropriate ads extremely challenging.</p>
+                <p>Social media content and advertising increasingly rely on implicit metaphors, making simple keyword blocklists completely obsolete.</p>
             </div>
             
             <div class="overview-grid">
                 <div class="overview-cards">
                     <div class="overview-card glass">
                         <div class="card-icon">
-                            <i class="fa-solid fa-shield-halved"></i>
+                            <i class="fa-solid fa-mask"></i>
                         </div>
                         <div class="card-content">
-                            <h3>Multimodal Evasion Shield</h3>
-                            <p>Traditional safety filters fail when text and images are harmless individually but harmful combined. SafeAd AI performs unified multimodal semantic reasoning to block evasive ads.</p>
+                            <h3>Implicit Semantics Shield</h3>
+                            <p>Traditional safety filters fail when text and images are harmless individually but harmful combined (e.g. comparing people to animals). SafeAd AI decodes these hidden metaphors.</p>
                         </div>
                     </div>
                     
                     <div class="overview-card glass">
                         <div class="card-icon">
-                            <i class="fa-solid fa-child"></i>
+                            <i class="fa-solid fa-earth-americas"></i>
                         </div>
                         <div class="card-content">
-                            <h3>Age-Aware Restrictions</h3>
-                            <p>Integrates advanced age-confidence indicators and user age-verification models to prevent adult-targeted advertising (alcohol, vaping, gambling) from slipping through to minors.</p>
+                            <h3>Socio-Cultural Context (K)</h3>
+                            <p>Integrates visual captioning (BLIP2) and entity search to query internet databases, providing the AI with the necessary background knowledge to understand regional jokes or slang.</p>
                         </div>
                     </div>
                     
                     <div class="overview-card glass">
                         <div class="card-icon">
-                            <i class="fa-solid fa-brain"></i>
+                            <i class="fa-solid fa-graduation-cap"></i>
                         </div>
                         <div class="card-content">
-                            <h3>Explainable AI (XAI)</h3>
-                            <p>Instead of opaque binary decisions, the framework provides transparent risk metrics and detailed policy violation explanations using advanced language generation rules (inspired by HatReD).</p>
+                            <h3>Training-Free Adaptability</h3>
+                            <p>Since internet memes evolve daily, retraining deep learning models is too slow. Our few-shot in-context learning model adapts instantly using real-time case retrieval.</p>
                         </div>
                     </div>
                 </div>
                 
                 <div class="overview-right-content">
-                    <h3 class="gradient-text" style="font-size: 1.8rem; margin-bottom: 1.5rem;">Problem Statement</h3>
-                    <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem; border-left: 3px solid #7f00ff; padding-left: 1.5rem;">
-                        "Development of a multi-modal AI-based trust and safety framework for social media platforms that detects harmful advertisements and performs age-aware content moderation by integrating visual, textual, and contextual information to prevent inappropriate content from reaching users."
+                    <h3 class="gradient-text" style="font-size: 1.8rem; margin-bottom: 1.5rem;">The 3 Keys of Multimodal Metaphors</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 2.0rem; font-size: 0.95rem; line-height: 1.6;">
+                        Social science defines metaphor as describing one thing (the <strong>Tenor</strong>) in terms of another (the <strong>Vehicle</strong>). To understand a hateful or deceptive meme, our AI extracts three key parameters:
                     </p>
-                    <h3 style="font-size: 1.4rem; margin-bottom: 1rem;">Key Objectives</h3>
                     <ul style="color: var(--text-secondary); list-style-position: inside; display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.95rem;">
-                        <li><strong style="color: white;">Multimodal Pipeline:</strong> Fuse graphic OCR, visual features, and NLP contexts into a central assessment matrix.</li>
-                        <li><strong style="color: white;">Proactive Filtering:</strong> Intercept fraud, explicit themes, and scams pre-publication.</li>
-                        <li><strong style="color: white;">Age Confidence Analysis:</strong> Prevent age misrepresentation issues from exposing minors to adult marketing.</li>
-                        <li><strong style="color: white;">Human-in-the-Loop (HITL):</strong> Route borderline violations to manual queues to optimize reviewer workloads.</li>
+                        <li><strong style="color: white;">Metaphorical Tenor:</strong> The target group, brand, or individual being referenced or attacked in the creative.</li>
+                        <li><strong style="color: white;">Socio-Cultural Knowledge:</strong> The specific historical, regional, or cultural context needed to decode the implicit meaning.</li>
+                        <li><strong style="color: white;">Metaphorical Representation Pattern:</strong> The logical pattern (contrast, personification, or analogy) used to link the visual image with the text.</li>
                     </ul>
                 </div>
             </div>
@@ -140,8 +138,8 @@
     <section id="pipeline">
         <div class="container">
             <div class="section-header">
-                <h2>Framework <span class="gradient-text">Architecture</span></h2>
-                <p>How SafeAd AI digests, analyzes, and decides on social media advertisements in real-time.</p>
+                <h2>The 4-Step <span class="gradient-text">Research Pipeline</span></h2>
+                <p>How our framework processes, decodes, and reasons about implicit multimodal metaphors step-by-step.</p>
             </div>
             
             <div class="pipeline-timeline">
@@ -149,44 +147,32 @@
                 <div class="pipeline-step">
                     <div class="pipeline-number">1</div>
                     <div class="pipeline-step-content glass">
-                        <h3>Input Ingestion & Metadata <span>Module I</span></h3>
-                        <p>The advertiser submits the ad creative, including the graphic file (image/video), text copy, target audience demographics (configured age range, location), and advertising category metadata.</p>
+                        <h3>a) SCGen Search (Socio-Cultural Generative Search)</h3>
+                        <p><strong>Simple terms</strong>: The AI looks at the image, names the objects (like "chimpanzee"), and queries online search engines to find the cultural, political, or social meanings associated with those objects. This bridges the gap between raw pixels and human knowledge.</p>
                     </div>
                 </div>
                 
                 <div class="pipeline-step">
                     <div class="pipeline-number">2</div>
                     <div class="pipeline-step-content glass">
-                        <h3>Multimodal Feature Extraction <span>Module II</span></h3>
-                        <p>SafeAd AI activates parallel extractors:
-                            <br>• <strong>Optical Character Recognition (OCR)</strong>: Pulls embedded graphic text out of the image.
-                            <br>• <strong>Computer Vision (CV)</strong>: Detects restricted items, logos, and visual metaphors.
-                            <br>• <strong>NLP Encoder</strong>: Analyzes ad copy semantics, sentiment, and intent.
-                        </p>
+                        <h3>b) SCRA-MTI (Socio-Cultural Relevance Assessment)</h3>
+                        <p><strong>Simple terms</strong>: The AI compares the extracted cultural knowledge with the meme's text. It automatically filters out background objects and scores each item (0 to 2) based on how relevant it is to the joke or text, identifying the true target (the metaphorical tenor).</p>
                     </div>
                 </div>
                 
                 <div class="pipeline-step">
                     <div class="pipeline-number">3</div>
                     <div class="pipeline-step-content glass">
-                        <h3>Age-Confidence Engine <span>Module III</span></h3>
-                        <p>Validates targeting compliance. It checks if the ad promotes age-restricted services/products (alcohol, financial products, vaping) and computes an age-appropriateness confidence score based on the extracted visual/textual semantic features.</p>
+                        <h3>c) RCR (Representative Case Retrieval)</h3>
+                        <p><strong>Simple terms</strong>: The AI searches a local database of historical safety violations to find similar cases (exemplars). Looking at how those past cases were categorized helps guide the AI to identify standard metaphor patterns (like analogy or contrast).</p>
                     </div>
                 </div>
                 
                 <div class="pipeline-step">
                     <div class="pipeline-number">4</div>
                     <div class="pipeline-step-content glass">
-                        <h3>Explainable AI (XAI) Decider <span>Module IV</span></h3>
-                        <p>Integrates the extracted features into a decision matrix. Utilizing reasoning heuristics derived from the <strong>HatReD</strong> paradigm, it outputs an overall Risk Score (0-100%) and generates a detailed, natural language explanation detailing which platform policies are violated.</p>
-                    </div>
-                </div>
-                
-                <div class="pipeline-step">
-                    <div class="pipeline-number">5</div>
-                    <div class="pipeline-step-content glass">
-                        <h3>Human-in-the-Loop (HITL) Queue <span>Module V</span></h3>
-                        <p>If the risk score lies in the borderline range (e.g. 40-70% uncertainty), the ad is temporarily held and routed to a prioritized human moderation queue, complete with the XAI-generated policy flags to accelerate manual review.</p>
+                        <h3>d) Chain-of-Thought (CoT) MLLM Decider</h3>
+                        <p><strong>Simple terms</strong>: The AI puts all these facts together (Objects + OCR text + Cultural Context + Past Cases) into a step-by-step reasoning prompt. A Multimodal Large Language Model evaluates the metaphor and generates a final decision with a detailed explanation.</p>
                     </div>
                 </div>
                 
