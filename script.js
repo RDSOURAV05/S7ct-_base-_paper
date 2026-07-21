@@ -145,6 +145,15 @@ window.addEventListener('DOMContentLoaded', () => {
                 processUploadedFile(files[0]);
             }
         });
+
+        // Add programmatic click handler to dropzone to bypass layering bugs
+        dropzone.addEventListener('click', (e) => {
+            if (e.target.id === 'image-upload' || e.target.closest('#btn-remove-img') || e.target.closest('#preview-container')) {
+                return;
+            }
+            const fileInput = document.getElementById('image-upload');
+            if (fileInput) fileInput.click();
+        });
     }
 
     // Load default template (fhm) on launch
@@ -209,19 +218,23 @@ function runTesseractOcr(imageSrc, fileName) {
             const cleanText = text.trim();
             if (ocrBadge) ocrBadge.style.display = 'none';
             
-            if (cleanText) {
-                uploadedOcrText = cleanText;
-                
-                // Run AI prediction based on OCR text and file name
-                uploadedFlowData = predictAdMetadataFromOCR(cleanText, fileName || 'meme.png');
-            }
+            uploadedOcrText = cleanText || "Meme Creative Uploaded";
+            
+            // Run AI prediction based on OCR text and file name
+            uploadedFlowData = predictAdMetadataFromOCR(uploadedOcrText, fileName || 'meme.png');
         }).catch(err => {
             console.error('Tesseract OCR error:', err);
             if (ocrBadge) ocrBadge.style.display = 'none';
+            
+            uploadedOcrText = "Meme Creative Uploaded";
+            uploadedFlowData = predictAdMetadataFromOCR(uploadedOcrText, fileName || 'meme.png');
         });
     } else {
+        // Fallback if Tesseract.js is offline or fails to load
         setTimeout(() => {
             if (ocrBadge) ocrBadge.style.display = 'none';
+            uploadedOcrText = "Meme Creative Uploaded";
+            uploadedFlowData = predictAdMetadataFromOCR(uploadedOcrText, fileName || 'meme.png');
         }, 1000);
     }
 }
