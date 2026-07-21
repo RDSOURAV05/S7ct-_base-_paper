@@ -116,6 +116,7 @@ function switchDashboardTab(tabName) {
 // --- Global Image Upload State ---
 let uploadedImageDataUrl = null;
 let uploadedOcrText = null;
+let uploadedFlowData = null;
 
 // --- Drag & Drop Event Listeners ---
 window.addEventListener('DOMContentLoaded', () => {
@@ -202,17 +203,9 @@ function runTesseractOcr(imageSrc) {
             
             if (cleanText) {
                 uploadedOcrText = cleanText;
-                // Append extracted text to ad headline copy if empty or enhance it
-                const textInput = document.getElementById('ad-text');
-                if (!textInput.value || textInput.value.includes('🚀') || textInput.value.includes('💨') || textInput.value.includes('Tired of')) {
-                    textInput.value = cleanText;
-                }
                 
-                // Update visuals tag hint based on filename / text
-                const visualsInput = document.getElementById('ad-visuals');
-                if (!visualsInput.value || visualsInput.value.includes('stack of gold')) {
-                    visualsInput.value = "user uploaded image, text graphic, meme layout";
-                }
+                // Run AI prediction based on OCR text
+                uploadedFlowData = predictAdMetadataFromOCR(cleanText, file ? file.name : 'meme.png');
             }
         }).catch(err => {
             console.error('Tesseract OCR error:', err);
@@ -225,12 +218,131 @@ function runTesseractOcr(imageSrc) {
     }
 }
 
+// --- AI Auto-Generator Predictor (Simulating Multimodal ML parsing from OCR) ---
+function predictAdMetadataFromOCR(ocrText, fileName) {
+    const textClean = ocrText.toLowerCase();
+    let category = "commercial";
+    let targetAge = 13;
+    let visuals = "commercial product design, text overlay";
+    let blipCaption = "An advertisement layout featuring graphic text overlay.";
+    let nerEntities = ["Ad Creative", "Visual Frame"];
+    let yoloObjects = ["text label", "creative graphic"];
+    let sckContext = "Socio-Cultural Knowledge (K): The creative is parsed for cultural, political, or restricted brand metaphors.";
+    let relevanceScores = [];
+    let representativeCases = [];
+    let cotTrace = "";
+
+    // Heuristics mapping to Fig. 3 levels
+    if (textClean.includes("roi") || textClean.includes("guaranteed") || textClean.includes("return") || textClean.includes("invest") || textClean.includes("crypto") || textClean.includes("coin") || textClean.includes("wealth") || textClean.includes("rich")) {
+        category = "finance";
+        targetAge = 18;
+        visuals = "gold coins, stock trend chart, financial indicators, luxury elements";
+        blipCaption = "A digital advertisement containing high-yield investment triggers and currency tokens.";
+        nerEntities = ["ROI Guarantee", "Crypto Token", "Telegram Link"];
+        yoloObjects = ["gold coins", "trend chart", "wealth symbols"];
+        sckContext = "Socio-Cultural Knowledge (K): Promising guaranteed, risk-free returns or overnight wealth is a standard socio-cultural metaphor structure used in financial fraud schemes to bypass retail investor caution.";
+        relevanceScores = [
+            { entity: "Guaranteed ROI", score: "2 (High)" },
+            { entity: "Crypto Token", score: "2 (High)" },
+            { entity: "Wealth Symbols", score: "1 (Medium)" }
+        ];
+        representativeCases = [
+            { id: "RC1 (FHM-Scam #402)", knowledge: "Deceptive Ponzi scheme targeting retail investors.", reason: "Associates luxury indicators with instant wealth." },
+            { id: "RC2 (HatReD-Scam #119)", knowledge: "Unlicensed crypto token presale.", reason: "Promotes fake returns and FOMO." }
+        ];
+        cotTrace = "1. SCGen Search: Extracted visual objects (coins, chart) and OCR 'Guaranteed Return'.\n2. SCRA-MTI Assessment: Entity 'Guaranteed ROI' scored 2 (High Relevance).\n3. RCR Search: Matched RC1 Ponzi template.\n4. MLLM Decision: REJECT due to Deceptive Financial Claims.";
+    } else if (textClean.includes("vape") || textClean.includes("puff") || textClean.includes("smoke") || textClean.includes("vibe") || textClean.includes("nicotine") || textClean.includes("mint") || textClean.includes("flavor")) {
+        category = "beverage";
+        targetAge = 21;
+        visuals = "e-cigarette vape pen, sweet fruit characters, vapor clouds, youthful group";
+        blipCaption = "A flavored nicotine vape pen advertisement surrounded by vapor and colorful graphics.";
+        nerEntities = ["Flavored Vape", "Nicotine Product", "Youth Vibe"];
+        yoloObjects = ["vape pen", "vapor cloud", "cartoon graphics"];
+        sckContext = "Socio-Cultural Knowledge (K): Flavored e-cigarette branding with cartoon styling or bright colors is culturally recognized as appealing directly to minors, which is restricted under safety policies.";
+        relevanceScores = [
+            { entity: "Flavored Vape", score: "2 (High)" },
+            { entity: "Target Age Group", score: "2 (High)" },
+            { entity: "Vapor Cloud", score: "1 (Medium)" }
+        ];
+        representativeCases = [
+            { id: "RC1 (AdSafety-Minor #89)", knowledge: "Nicotine branding targeting minor audiences.", reason: "Uses cartoon elements to appeal to teens." }
+        ];
+        cotTrace = "1. SCGen Search: Detected vape pen and vapor tags.\n2. SCRA-MTI Assessment: Flagged age group mismatch (13/18 vs 21 nicotine boundary).\n3. RCR Search: Matched RC1 youth targeting case.\n4. MLLM Decision: REJECT due to Minor Protection Policy violation.";
+    } else if (textClean.includes("woman") || textClean.includes("driver") || textClean.includes("kitchen") || textClean.includes("wife") || textClean.includes("driving") || textClean.includes("belongs")) {
+        category = "dating";
+        targetAge = 18;
+        visuals = "domestic kitchen layout, clean counter, pointing hand stereotype representation";
+        blipCaption = "A social media post with a text graphic depicting female domestic roles.";
+        nerEntities = ["Gender stereotype", "Domestic kitchen", "Misogynistic trope"];
+        yoloObjects = ["woman", "kitchen tools", "pointing hand"];
+        sckContext = "Socio-Cultural Knowledge (K): Memes or slogans enforcing traditional subordinating gender roles (e.g. 'keep her in the kitchen') violate community policies regarding harassment and hate speech.";
+        relevanceScores = [
+            { entity: "stays where she belongs", score: "2 (High)" },
+            { entity: "women driving", score: "2 (High)" },
+            { entity: "Kitchen stereotype", score: "1 (Medium)" }
+        ];
+        representativeCases = [
+            { id: "RC1 (MAMI-Misogyny #214)", knowledge: "Gender stereotype meme enforcing domestic subordination.", reason: "Satirizes female competence to promote gender discrimination." }
+        ];
+        cotTrace = "1. SCGen Search: Detected gender roles in text 'stays where she belongs'.\n2. SCRA-MTI Assessment: Evaluated metaphorical tenor (domestic subordination comparison).\n3. RCR Search: Matched MAMI case RC1.\n4. MLLM Decision: REJECT due to Hate Speech Policy violation.";
+    } else {
+        category = "commercial";
+        targetAge = 13;
+        visuals = "commercial retail graphic, neutral background, product packaging";
+        blipCaption = "A standard commercial banner showcasing consumer products.";
+        nerEntities = ["Brand Logo", "Product Name"];
+        yoloObjects = ["package box", "clean layout"];
+        sckContext = "Socio-Cultural Knowledge (K): The creative represents standard benign consumer product promotion without implicit metaphors or offensive socio-cultural references.";
+        relevanceScores = [
+            { entity: "Product Package", score: "1 (Medium)" },
+            { entity: "Brand Logo", score: "1 (Medium)" }
+        ];
+        representativeCases = [
+            { id: "RC1 (Commercial #12)", knowledge: "Standard beverage retail advertising.", reason: "Promotes product with neutral claims." }
+        ];
+        cotTrace = "1. SCGen Search: Extracted product creative tag.\n2. SCRA-MTI Assessment: No high-risk policy matches.\n3. RCR Search: Matched safe retail benchmarks.\n4. MLLM Decision: APPROVED.";
+    }
+
+    // Auto-fill inputs dynamically
+    const textEl = document.getElementById('ad-text');
+    const visualsEl = document.getElementById('ad-visuals');
+    const ageEl = document.getElementById('ad-target-age');
+    const catEl = document.getElementById('ad-category');
+
+    if (textEl) textEl.value = ocrText;
+    if (visualsEl) visualsEl.value = visuals;
+    if (ageEl) ageEl.value = targetAge;
+    if (catEl) catEl.value = category;
+
+    // Show indicator on the upload dropzone that inputs are autocompleted
+    const ocrStatusText = document.getElementById('ocr-status-text');
+    const ocrBadge = document.getElementById('ocr-badge');
+    if (ocrBadge) {
+        ocrBadge.style.display = 'flex';
+        ocrBadge.style.background = 'rgba(16, 185, 129, 0.15)';
+        ocrBadge.style.borderColor = 'rgba(16, 185, 129, 0.3)';
+        ocrBadge.style.color = '#10b981';
+    }
+    if (ocrStatusText) ocrStatusText.innerHTML = '<i class="fa-solid fa-circle-check"></i> AI Auto-generated all metadata. Ready to check image!';
+
+    return {
+        blipCaption: blipCaption,
+        nerEntities: nerEntities,
+        yoloObjects: yoloObjects,
+        sckContext: sckContext,
+        relevanceScores: relevanceScores,
+        representativeCases: representativeCases,
+        cotTrace: cotTrace
+    };
+}
+
 // --- Remove Uploaded Image ---
 function removeUploadedImage(event) {
     if (event) event.stopPropagation();
     
     uploadedImageDataUrl = null;
     uploadedOcrText = null;
+    uploadedFlowData = null;
     
     document.getElementById('image-upload').value = '';
     document.getElementById('image-preview').src = '';
@@ -364,6 +476,7 @@ function loadTemplate(key) {
     if (uploadedImageDataUrl) {
         uploadedImageDataUrl = null;
         uploadedOcrText = null;
+        uploadedFlowData = null;
         document.getElementById('image-upload').value = '';
         document.getElementById('image-preview').src = '';
         document.getElementById('preview-container').style.display = 'none';
@@ -437,6 +550,9 @@ function runAdAnalysis(event) {
         // Update Dashboard GUI
         updateDashboard(results);
         
+        // Switch to the Flow Inspector tab automatically so they see the 4 levels!
+        switchDashboardTab('flow');
+        
         // Hide loader
         loader.classList.remove('active');
     }, 2400);
@@ -450,7 +566,7 @@ function analyzeInputs() {
     const categoryInput = document.getElementById('ad-category').value;
     
     // If the inputs match our templates exactly, return the static template data
-    if (templates[activeTemplate] && 
+    if (!uploadedImageDataUrl && templates[activeTemplate] && 
         textInput === templates[activeTemplate].text && 
         visualsInput === templates[activeTemplate].visuals &&
         targetAgeInput === templates[activeTemplate].targetAge &&
@@ -478,44 +594,38 @@ function analyzeInputs() {
     if (scamWordMatches.length >= 2 || (scamWordMatches.length >= 1 && scamVisualMatches.length >= 1) || categoryInput === 'finance') {
         if (scamWordMatches.some(w => ["roi", "guaranteed", "10x"].includes(w))) {
             riskScore += 45;
-            deceptive = 'FLAGGED';
-            reasons.push("Misleading/deceptive financial claims matching scam profiles (high ROI, guaranteed gains)");
-        } else if (categoryInput === 'finance') {
-            riskScore += 25;
-            reasons.push("General financial targeting needing safety evaluation");
+        } else {
+            riskScore += 30;
         }
+        riskScore += Math.min(40, (scamWordMatches.length + scamVisualMatches.length) * 8);
+        deceptive = 'FLAGGED';
+        reasons.push("Deceptive ROI claims & high-scam signals");
     }
     
-    // 2. Age Restrictions Heuristics (Nicotine/Alcohol/Dating targeting minors)
-    const minorKeywords = ["vape", "vaping", "nicotine", "smoke", "fruit", "sweet", "flavor", "beer", "wine", "alcohol", "drink", "cocktail", "party", "club", "dating", "sexy", "teen", "teenager", "minor"];
-    const minorVisuals = ["vape pen", "liquor bottle", "cocktail", "smoke", "cartoon", "young"];
+    // 2. Minor Audience Compliance
+    const minorKeywords = ["vape", "puff", "smoke", "nicotine", "flavor", "sweet", "ice-mint"];
+    const minorVisuals = ["vape", "vapor", "fruit", "cartoon"];
     
     let minorWordMatches = minorKeywords.filter(w => textClean.includes(w));
     let minorVisualMatches = minorVisuals.filter(v => visualsClean.includes(v));
     
-    if (minorWordMatches.length >= 1 || minorVisualMatches.length >= 1) {
-        if (targetAgeInput < 18 && (categoryInput === 'beverage' || categoryInput === 'dating')) {
-            riskScore += 50;
-            ageCompliance = 'FLAGGED';
-            reasons.push("Vaping/alcohol/dating keywords combined with underage target demographics (under 18)");
-        } else if (targetAgeInput < 18) {
-            riskScore += 30;
-            ageCompliance = 'FLAGGED';
-            reasons.push("Promoting age-restricted elements (vape/alcohol/dating terms) while targeting minors");
-        } else {
-            riskScore += 15;
-            reasons.push("Age-restricted keywords present, target age is safe (18+)");
-        }
+    if ((minorWordMatches.length >= 1 && targetAgeInput < 18) || (categoryInput === 'beverage' && targetAgeInput < 18)) {
+        riskScore += 50;
+        ageCompliance = 'FLAGGED';
+        reasons.push("Targeting nicotine/flavors to underage audiences");
+    } else if (minorWordMatches.length >= 1) {
+        riskScore += 25;
+        ageCompliance = 'FLAGGED';
+        reasons.push("Age-restricted items advertised without verification");
     }
     
-    // 3. Hate Speech Heuristics
-    const hateWords = ["women belongs", "belongs in the kitchen", "dumb", "hate", "terrorist", "halal", "bomb", "stereotype", "misogyn", "racist"];
+    // 3. Hate Speech / Stereotypes
+    const hateWords = ["women driving", "stays where she belongs", "kitchen helper", "menrule", "keep her in the kitchen"];
     let hateWordMatches = hateWords.filter(w => textClean.includes(w));
-    
     if (hateWordMatches.length >= 1) {
-        riskScore += 40;
+        riskScore += 60;
         hateSpeech = 'FLAGGED';
-        reasons.push("Hate speech markers/derogatory social stereotypes matching policy violations");
+        reasons.push("Derogatory gender stereotypes / misogyny flag");
     }
     
     // Caps
@@ -539,15 +649,6 @@ function analyzeInputs() {
         explanationText = "Ad creative complies with all safety check heuristics. Visually and textually safe; no matching policy violation patterns detected.";
     } else {
         explanationText = `Policy Decision: ${decision}. Safety index flagged at ${riskScore}%. Analysis reveals: ` + reasons.join(", ") + ". ";
-        if (deceptive === 'FLAGGED') {
-            explanationText += "Visual cues match luxury trigger heuristics. ";
-        }
-        if (ageCompliance === 'FLAGGED') {
-            explanationText += " Nicotine/alcohol target boundaries breached for underage audiences. ";
-        }
-        if (hateSpeech === 'FLAGGED') {
-            explanationText += " Implicit stereotypes violate safety standards regarding target groups.";
-        }
     }
     
     return {
@@ -563,7 +664,8 @@ function analyzeInputs() {
         ocrText: uploadedOcrText || ocrText || "NO GRAPHIC TEXT",
         explanation: explanationText,
         imageSrc: uploadedImageDataUrl || 'assets/hero_bg.png',
-        imageTag: uploadedImageDataUrl ? 'USER MEME ANALYZED' : activeTemplate.toUpperCase() + ' TEMPLATE'
+        imageTag: uploadedImageDataUrl ? 'USER MEME ANALYZED' : activeTemplate.toUpperCase() + ' TEMPLATE',
+        flowData: uploadedFlowData
     };
 }
 
@@ -680,12 +782,14 @@ function updateDashboard(results) {
     // Block D: MLLM Output Nodes
     const cotEl = document.getElementById('flow-cot-trace');
     const finalDecEl = document.getElementById('flow-final-decision');
+    const finalScoreEl = document.getElementById('flow-final-score');
     const finalReasonEl = document.getElementById('flow-final-reason');
     if (cotEl) cotEl.textContent = activeData.cotTrace || `1. SCGen Search: Extracted creative features.\n2. SCRA-MTI: Calculated risk score ${results.riskScore}%.\n3. Decision: ${results.decision}.`;
     if (finalDecEl) {
         finalDecEl.textContent = results.decision;
         finalDecEl.className = 'flow-final-decision-badge ' + results.decision.toLowerCase();
     }
+    if (finalScoreEl) finalScoreEl.textContent = results.riskScore + '%';
     if (finalReasonEl) finalReasonEl.textContent = results.explanation;
 }
 
