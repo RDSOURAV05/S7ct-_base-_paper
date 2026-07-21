@@ -154,6 +154,25 @@ window.addEventListener('DOMContentLoaded', () => {
             const fileInput = document.getElementById('image-upload');
             if (fileInput) fileInput.click();
         });
+
+        // Programmatically bind change event to ensure native clicks route to processUploadedFile
+        const fileInput = document.getElementById('image-upload');
+        if (fileInput) {
+            fileInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    processUploadedFile(file);
+                }
+            });
+        }
+
+        // Programmatically bind remove click event
+        const removeBtn = document.getElementById('btn-remove-img');
+        if (removeBtn) {
+            removeBtn.addEventListener('click', (e) => {
+                removeUploadedImage(e);
+            });
+        }
     }
 
     // Load default template (fhm) on launch
