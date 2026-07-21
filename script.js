@@ -325,6 +325,23 @@ function predictAdMetadataFromOCR(ocrText, fileName) {
             { id: "RC1 (MAMI-Misogyny #214)", knowledge: "Gender stereotype meme enforcing domestic subordination.", reason: "Satirizes female competence to promote gender discrimination." }
         ];
         cotTrace = "1. SCGen Search: Detected gender roles in text 'stays where she belongs'.\n2. SCRA-MTI Assessment: Evaluated metaphorical tenor (domestic subordination comparison).\n3. RCR Search: Matched MAMI case RC1.\n4. MLLM Decision: REJECT due to Hate Speech Policy violation.";
+    } else if (textClean.includes("slavery") || textClean.includes("slave") || textClean.includes("black") || textClean.includes("looks at me") || textClean.includes("everybody looks")) {
+        category = "dating";
+        targetAge = 18;
+        visuals = "sketch cartoon figure flipping desk, classroom context, whiteboard, high contrast";
+        blipCaption = "A stick figure flipping a desk in a classroom setting, showing severe frustration.";
+        nerEntities = ["Racial Metaphor", "Slavery Reference", "Social Hostility"];
+        yoloObjects = ["cartoon figure", "desk", "whiteboard"];
+        sckContext = "Socio-Cultural Knowledge (K): The meme uses a classroom scenario referencing 'slavery' to trigger implicit racial associations, making individuals of minority races feel targeted or isolated in social contexts.";
+        relevanceScores = [
+            { entity: "slavery", score: "2 (High)" },
+            { entity: "looks at me", score: "2 (High)" },
+            { entity: "cartoon figure", score: "1 (Medium)" }
+        ];
+        representativeCases = [
+            { id: "RC1 (HatReD #405)", knowledge: "Implicit racial profiling / microaggression in memes.", reason: "Metaphorically references racial historical contexts to isolate specific groups." }
+        ];
+        cotTrace = "1. SCGen Search: Detected racial keyword (slavery) and visual element (cartoon desk flip).\n2. SCRA-MTI Assessment: Entity 'slavery' scored 2 (High Relevance).\n3. RCR Search: Matched HatReD case RC1.\n4. MLLM Decision: REJECT due to Implicit Racial Stereotype / Hate Speech policy violation.";
     } else {
         category = "commercial";
         targetAge = 13;
@@ -660,12 +677,18 @@ function analyzeInputs() {
     }
     
     // 3. Hate Speech / Stereotypes
-    const hateWords = ["women driving", "stays where she belongs", "kitchen helper", "menrule", "keep her in the kitchen"];
+    const hateWords = ["women driving", "stays where she belongs", "kitchen helper", "menrule", "keep her in the kitchen", "slavery", "slave", "looks at me", "everybody looks"];
     let hateWordMatches = hateWords.filter(w => textClean.includes(w));
     if (hateWordMatches.length >= 1) {
-        riskScore += 60;
-        hateSpeech = 'FLAGGED';
-        reasons.push("Derogatory gender stereotypes / misogyny flag");
+        if (textClean.includes("slavery") || textClean.includes("slave") || textClean.includes("looks at me") || textClean.includes("everybody looks")) {
+            riskScore += 75; // Ensure it reaches REJECTED threshold
+            hateSpeech = 'FLAGGED';
+            reasons.push("Implicit racial stereotype/hostility metaphor");
+        } else {
+            riskScore += 70;
+            hateSpeech = 'FLAGGED';
+            reasons.push("Derogatory gender stereotypes / misogyny flag");
+        }
     }
     
     // Caps
