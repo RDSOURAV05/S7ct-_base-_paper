@@ -1796,6 +1796,63 @@ footer a {
     color: var(--text-secondary);
 }
 
+/* Workflow Tutorial Guide Box */
+.workflow-tutorial-box {
+    margin-bottom: 1.5rem;
+    padding: 1.25rem;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.workflow-tutorial-box h4 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #00F2FE;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.tutorial-steps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.tutorial-step {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+}
+
+.step-badge {
+    background: rgba(0, 242, 254, 0.1);
+    border: 1px solid rgba(0, 242, 254, 0.25);
+    color: #00F2FE;
+    min-width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-top: 0.1rem;
+}
+
+.tutorial-step p {
+    font-size: 0.82rem;
+    line-height: 1.45;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.tutorial-step p strong {
+    color: var(--text-primary);
+}
+
 /* Responsive Breakpoints */
 @media (max-width: 992px) {
     .hero-grid {
