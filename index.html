@@ -457,99 +457,233 @@
                             <div class="loader-status-item" id="status-xai"><i></i> Generating Explainable AI Report...</div>
                         </div>
                     </div>
-                    
-                    <!-- Dashboard Content -->
-                    <div class="dashboard-header">
-                        <div class="dashboard-title-area">
-                            <h3><i class="fa-solid fa-server" style="color: #00F2FE;"></i> Trust Dashboard</h3>
-                            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.15rem;">ID: SA-9842A1 (PROACTIVE EVALUATION)</p>
-                        </div>
-                        <div class="decision-badge rejected" id="result-decision">REJECTED</div>
+                                   <!-- Dashboard Tabs -->
+                    <div class="dashboard-tabs">
+                        <button class="dash-tab-btn active" id="tab-summary-btn" onclick="switchDashboardTab('summary')">
+                            <i class="fa-solid fa-gauge-high"></i> Trust Dashboard
+                        </button>
+                        <button class="dash-tab-btn" id="tab-flow-btn" onclick="switchDashboardTab('flow')">
+                            <i class="fa-solid fa-diagram-project"></i> Architecture Flow Inspector (Fig. 3)
+                        </button>
                     </div>
-                    
-                    <div class="dashboard-overview-row">
-                        <!-- Risk Gauge -->
-                        <div class="gauge-wrapper">
-                            <div class="gauge-container">
-                                <svg class="gauge-svg" width="140" height="140" viewBox="0 0 140 140">
-                                    <circle class="gauge-bg" cx="70" cy="70" r="65"></circle>
-                                    <circle class="gauge-fill" cx="70" cy="70" r="65" id="result-gauge"></circle>
-                                </svg>
-                                <div class="gauge-text">
-                                    <div class="gauge-value" id="result-score">85%</div>
-                                    <div class="gauge-label">Risk Index</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Policy Violations List -->
-                        <div class="violations-container">
-                            <h4>Policy Violations Check</h4>
-                            <div class="violations-list">
-                                <div class="violation-item">
-                                    <span>Deceptive Marketing / Scams</span>
-                                    <span class="violation-status flagged" id="v-deceptive">FLAGGED</span>
-                                </div>
-                                <div class="violation-item">
-                                    <span>Age Restriction Compliance</span>
-                                    <span class="violation-status clean" id="v-age">CLEAN</span>
-                                </div>
-                                <div class="violation-item">
-                                    <span>Hate Speech & Harassment</span>
-                                    <span class="violation-status clean" id="v-hate">CLEAN</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Pipeline detailed blocks -->
-                    <div class="pipeline-results-container">
-                        <!-- Meme Image Display Card -->
-                        <div class="result-block">
-                            <h4>Analyzed Meme Creative</h4>
-                            <div class="dashboard-meme-preview-box">
-                                <img id="dashboard-meme-img" src="assets/hero_bg.png" alt="Analyzed Meme Preview">
-                                <div class="meme-analysis-overlay" id="meme-overlay-tag">TEMPLATE LOADED</div>
-                            </div>
-                        </div>
 
-                        <!-- OCR Extract -->
-                        <div class="result-block">
-                            <h4>Extracted Graphic OCR Text</h4>
-                            <div class="ocr-result-output" id="result-ocr">NO GRAPHIC TEXT DETECTED</div>
+                    <!-- Dashboard Content -->
+                    <div id="summary-view">
+                        <div class="dashboard-header">
+                            <div class="dashboard-title-area">
+                                <h3><i class="fa-solid fa-server" style="color: #00F2FE;"></i> Trust Dashboard</h3>
+                                <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.15rem;">ID: SA-9842A1 (PROACTIVE EVALUATION)</p>
+                            </div>
+                            <div class="decision-badge rejected" id="result-decision">REJECTED</div>
                         </div>
                         
-                        <!-- Age Analytics -->
-                        <div class="result-block">
-                            <h4>Age-Confidence Analytics</h4>
-                            <div class="age-analytics-block">
-                                <div class="age-stat-card">
-                                    <div class="label">Min Target Age Set</div>
-                                    <div class="val" id="result-target-age">13 Yrs</div>
+                        <div class="dashboard-overview-row">
+                            <!-- Risk Gauge -->
+                            <div class="gauge-wrapper">
+                                <div class="gauge-container">
+                                    <svg class="gauge-svg" width="140" height="140" viewBox="0 0 140 140">
+                                        <circle class="gauge-bg" cx="70" cy="70" r="65"></circle>
+                                        <circle class="gauge-fill" cx="70" cy="70" r="65" id="result-gauge"></circle>
+                                    </svg>
+                                    <div class="gauge-text">
+                                        <div class="gauge-value" id="result-score">85%</div>
+                                        <div class="gauge-label">Risk Index</div>
+                                    </div>
                                 </div>
-                                <div class="age-stat-card">
-                                    <div class="label">Appropriateness Score</div>
-                                    <div class="val" style="color: #10b981;" id="result-age-compliance">92% (High)</div>
+                            </div>
+                            
+                            <!-- Policy Violations List -->
+                            <div class="violations-container">
+                                <h4>Policy Violations Check</h4>
+                                <div class="violations-list">
+                                    <div class="violation-item">
+                                        <span>Deceptive Marketing / Scams</span>
+                                        <span class="violation-status flagged" id="v-deceptive">FLAGGED</span>
+                                    </div>
+                                    <div class="violation-item">
+                                        <span>Age Restriction Compliance</span>
+                                        <span class="violation-status clean" id="v-age">CLEAN</span>
+                                    </div>
+                                    <div class="violation-item">
+                                        <span>Hate Speech & Harassment</span>
+                                        <span class="violation-status clean" id="v-hate">CLEAN</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         
-                        <!-- XAI Explainable reasons (HatReD style) -->
-                        <div class="result-block">
-                            <h4>Policy Decision Analysis</h4>
-                            <div class="xai-explanation-box">
-                                <p class="xai-explanation-text" id="result-explanation">
-                                    The advertisement incorporates key deceptive triggers. Visual objects (money stack, luxury car) matched with high-yield financial promises ('Guaranteed 10x ROI overnight') represent a known template of cryptocurrency scams. Highly recommended to reject to prevent user financial harm.
-                                </p>
+                        <!-- Pipeline detailed blocks -->
+                        <div class="pipeline-results-container">
+                            <!-- Meme Image Display Card -->
+                            <div class="result-block">
+                                <h4>Analyzed Meme Creative</h4>
+                                <div class="dashboard-meme-preview-box">
+                                    <img id="dashboard-meme-img" src="assets/hero_bg.png" alt="Analyzed Meme Preview">
+                                    <div class="meme-analysis-overlay" id="meme-overlay-tag">TEMPLATE LOADED</div>
+                                </div>
+                            </div>
+
+                            <!-- OCR Extract -->
+                            <div class="result-block">
+                                <h4>Extracted Graphic OCR Text</h4>
+                                <div class="ocr-result-output" id="result-ocr">NO GRAPHIC TEXT DETECTED</div>
+                            </div>
+                            
+                            <!-- Age Analytics -->
+                            <div class="result-block">
+                                <h4>Age-Confidence Analytics</h4>
+                                <div class="age-analytics-block">
+                                    <div class="age-stat-card">
+                                        <div class="label">Min Target Age Set</div>
+                                        <div class="val" id="result-target-age">13 Yrs</div>
+                                    </div>
+                                    <div class="age-stat-card">
+                                        <div class="label">Appropriateness Score</div>
+                                        <div class="val" style="color: #10b981;" id="result-age-compliance">92% (High)</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- XAI Explainable reasons (HatReD style) -->
+                            <div class="result-block">
+                                <h4>Policy Decision Analysis</h4>
+                                <div class="xai-explanation-box">
+                                    <p class="xai-explanation-text" id="result-explanation">
+                                        The advertisement incorporates key deceptive triggers. Visual objects (money stack, luxury car) matched with high-yield financial promises ('Guaranteed 10x ROI overnight') represent a known template of cryptocurrency scams. Highly recommended to reject to prevent user financial harm.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <!-- HITL routing alert -->
+                            <div class="hitl-alert-box" id="result-hitl-box" style="display: none;">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                                <span>Decision Uncertainty is high. Creative has been routed to the Human-in-the-Loop priority queue.</span>
                             </div>
                         </div>
-                        
-                        <!-- HITL routing alert -->
-                        <div class="hitl-alert-box" id="result-hitl-box" style="display: none;">
-                            <i class="fa-solid fa-triangle-exclamation"></i>
-                            <span>Decision Uncertainty is high. Creative has been routed to the Human-in-the-Loop priority queue.</span>
+                    </div>
+
+                    <!-- Architecture Flow Inspector View (Visualizing Fig. 3 Levels) -->
+                    <div id="flow-view" style="display: none;">
+                        <div class="flow-inspector-container">
+                            
+                            <!-- Block a: SCGen Search -->
+                            <div class="flow-block block-a">
+                                <div class="flow-block-header">
+                                    <span class="block-letter">a</span>
+                                    <span>SCGen Search (Socio-Cultural Generative Search)</span>
+                                </div>
+                                <div class="flow-grid-nodes">
+                                    <div class="flow-node">
+                                        <div class="flow-node-title"><i class="fa-solid fa-camera"></i> Image Captioning (BLIP2)</div>
+                                        <div class="flow-node-body" id="flow-blip-caption">"A luxury sports car parked in front of a modern villa."</div>
+                                    </div>
+                                    <div class="flow-node">
+                                        <div class="flow-node-title"><i class="fa-solid fa-tag"></i> Named Entities (Qwen2 NER)</div>
+                                        <div class="flow-node-body flex-tags" id="flow-ner-tags">
+                                            <span>Sports Car</span>
+                                            <span>Villa</span>
+                                        </div>
+                                    </div>
+                                    <div class="flow-node">
+                                        <div class="flow-node-title"><i class="fa-solid fa-cube"></i> Visual Objects (YOLO-World)</div>
+                                        <div class="flow-node-body flex-tags" id="flow-yolo-tags">
+                                            <span>car</span>
+                                            <span>house</span>
+                                        </div>
+                                    </div>
+                                    <div class="flow-node highlighted">
+                                        <div class="flow-node-title"><i class="fa-solid fa-globe"></i> Retrieved Socio-Cultural Knowledge (K)</div>
+                                        <div class="flow-node-body" id="flow-sck-context">
+                                            Visual elements of excessive wealth coupled with investment headlines represent standard wealth-trigger templates utilized in scams.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Arrow connector -->
+                            <div class="flow-arrow"><i class="fa-solid fa-down-long"></i></div>
+
+                            <!-- Block b: SCRA-MTI -->
+                            <div class="flow-block block-b">
+                                <div class="flow-block-header">
+                                    <span class="block-letter">b</span>
+                                    <span>SCRA-MTI (Socio-Cultural Relevance & Tenor Identification)</span>
+                                </div>
+                                <div class="flow-grid-nodes">
+                                    <div class="flow-node">
+                                        <div class="flow-node-title"><i class="fa-solid fa-font"></i> Graphic OCR Text (T)</div>
+                                        <div class="flow-node-body ocr-monospace" id="flow-ocr-text">"10X GUARANTEED RETURNS IN 24 HOURS!"</div>
+                                    </div>
+                                    <div class="flow-node">
+                                        <div class="flow-node-title"><i class="fa-solid fa-list-ol"></i> Quick Sort Relevance Scores (S)</div>
+                                        <table class="flow-relevance-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Entity (E)</th>
+                                                    <th>Relevance Score (S)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="flow-relevance-rows">
+                                                <tr>
+                                                    <td>Returns</td>
+                                                    <td>2 (High)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Sports Car</td>
+                                                    <td>1 (Medium)</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Arrow connector -->
+                            <div class="flow-arrow"><i class="fa-solid fa-down-long"></i></div>
+
+                            <!-- Block c: RCR -->
+                            <div class="flow-block block-c">
+                                <div class="flow-block-header">
+                                    <span class="block-letter">c</span>
+                                    <span>RCR (Representative Case Retrieval)</span>
+                                </div>
+                                <div class="flow-grid-nodes">
+                                    <div class="flow-node flex-cases-container" id="flow-rc-cases">
+                                        <div class="rc-case-card">
+                                            <div class="rc-case-header">Representative Case (RC1)</div>
+                                            <p><strong>Knowledge:</strong> Deceptive financial scam targeting retail investors with guaranteed high yields.</p>
+                                            <p class="rc-reason"><strong>Reason Metaphor:</strong> Associating stacks of cash with instant wealth overnight.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Arrow connector -->
+                            <div class="flow-arrow"><i class="fa-solid fa-down-long"></i></div>
+
+                            <!-- Block d: MLLM In-Context Reasoning & Output -->
+                            <div class="flow-block block-d">
+                                <div class="flow-block-header">
+                                    <span class="block-letter">d</span>
+                                    <span>MLLM In-Context Reasoning & Explanation</span>
+                                </div>
+                                <div class="flow-grid-nodes">
+                                    <div class="flow-node highlighted">
+                                        <div class="flow-node-title"><i class="fa-solid fa-code-branch"></i> Chain-of-Thought (CoT) Prompt Trace</div>
+                                        <div class="flow-node-body cot-trace-log" id="flow-cot-trace">
+                                            1. Compare input with Case 1. Both display gold coins and promise returns.
+                                            2. Detect deceptive marketing triggers.
+                                        </div>
+                                    </div>
+                                    <div class="flow-node block-d-output-node">
+                                        <div class="flow-node-title"><i class="fa-solid fa-circle-check"></i> Final Moderation Decision</div>
+                                        <div class="flow-final-decision-badge rejected" id="flow-final-decision">REJECTED</div>
+                                        <div class="flow-final-reason-text" id="flow-final-reason">The ad uses misleading financial terms.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
                         </div>
-                        
                     </div>
                 </div>
                 

@@ -93,6 +93,26 @@ function toggleBibtex() {
     }
 }
 
+// --- Dashboard Tab Switcher ---
+function switchDashboardTab(tabName) {
+    const summaryView = document.getElementById('summary-view');
+    const flowView = document.getElementById('flow-view');
+    const summaryBtn = document.getElementById('tab-summary-btn');
+    const flowBtn = document.getElementById('tab-flow-btn');
+
+    if (tabName === 'summary') {
+        if (summaryView) summaryView.style.display = 'block';
+        if (flowView) flowView.style.display = 'none';
+        if (summaryBtn) summaryBtn.classList.add('active');
+        if (flowBtn) flowBtn.classList.remove('active');
+    } else {
+        if (summaryView) summaryView.style.display = 'none';
+        if (flowView) flowView.style.display = 'block';
+        if (summaryBtn) summaryBtn.classList.remove('active');
+        if (flowBtn) flowBtn.classList.add('active');
+    }
+}
+
 // --- Global Image Upload State ---
 let uploadedImageDataUrl = null;
 let uploadedOcrText = null;
@@ -235,7 +255,23 @@ const templates = {
         ageCompliance: "CLEAN",
         hateSpeech: "CLEAN",
         ocrText: "INVEST NOW - 100% GUARANTEED RETURN",
-        explanation: "High Risk of Scam detected. The creative matches known templates of cryptocurrency scams. Visual indicators (luxury items, cash piles) combined with deceptive keywords ('10X ROI', 'Guaranteed return') violate advertising policy regarding misleading financial claims."
+        explanation: "High Risk of Scam detected. The creative matches known templates of cryptocurrency scams. Visual indicators (luxury items, cash piles) combined with deceptive keywords ('10X ROI', 'Guaranteed return') violate advertising policy regarding misleading financial claims.",
+        // Fig. 3 Architecture Nodes
+        blipCaption: "A stack of gold coins beside a luxury sports car and a private jet on a runway.",
+        nerEntities: ["SafeAdCoin", "Telegram", "Crypto", "ROI"],
+        yoloObjects: ["gold coins", "sports car", "jet cockpit", "trend chart"],
+        sckContext: "Socio-Cultural Knowledge (K): Visual displays of extravagant wealth (jets, cars) combined with urgent high-yield financial promises ('10x ROI', 'guaranteed') constitute a recognized template of deceptive investment fraud.",
+        relevanceScores: [
+            { entity: "Guaranteed ROI", score: "2 (High)" },
+            { entity: "SafeAdCoin", score: "2 (High)" },
+            { entity: "Gold Coins", score: "1 (Medium)" },
+            { entity: "Sports Car", score: "1 (Medium)" }
+        ],
+        representativeCases: [
+            { id: "RC1 (FHM-Scam #402)", knowledge: "Deceptive Ponzi scheme targeting retail investors.", reason: "Associates luxury cars with instant overnight wealth." },
+            { id: "RC2 (HatReD-Scam #119)", knowledge: "Unlicensed crypto token presale.", reason: "Promotes artificial FOMO and fake return guarantees." }
+        ],
+        cotTrace: "1. SCGen Search: Extracted visual objects (sports car, jet) and headline '10X GUARANTEED ROI'.\n2. SCRA-MTI Assessment: Entity 'Guaranteed ROI' scored 2 (High Relevance).\n3. RCR Search: Matched RC1 (Deceptive Ponzi template) via FAISS vector embeddings.\n4. MLLM Decision: Violation of Deceptive Marketing Policy."
     },
     vape: {
         text: "💨 UNLEASH THE VIBE! 💨 Discover the smoothest puff with our new Ice-Mint Vape. Fits perfectly in your pocket, looks ultra-cool, and tastes amazing. Try all 12 sweet fruit flavors today! #VapeLife #SmoothPuff #Vibe",
@@ -248,7 +284,21 @@ const templates = {
         ageCompliance: "FLAGGED",
         hateSpeech: "CLEAN",
         ocrText: "COOL PUFF - SWEET WATERMELON",
-        explanation: "Age Restriction Target Violation. The advertisement targets vaping products with sweet fruit flavors and energetic, cartoonish visual elements. The min targeted age is set to 13, which directly violates policies restricting nicotine/tobacco marketing to minors under 18/21."
+        explanation: "Age Restriction Target Violation. The advertisement targets vaping products with sweet fruit flavors and energetic, cartoonish visual elements. The min targeted age is set to 13, which directly violates policies restricting nicotine/tobacco marketing to minors under 18/21.",
+        blipCaption: "A colorful vape pen surrounded by vapor clouds and cartoon fruit characters.",
+        nerEntities: ["Ice-Mint Vape", "VapeLife", "SmoothPuff"],
+        yoloObjects: ["vape pen", "vapor cloud", "cartoon fruit", "dancing group"],
+        sckContext: "Socio-Cultural Knowledge (K): Bright neon styling and sweet fruit flavor branding combined with youth imagery appeal directly to underage demographics, violating tobacco/e-cigarette targeting regulations.",
+        relevanceScores: [
+            { entity: "Ice-Mint Vape", score: "2 (High)" },
+            { entity: "Target Age (13)", score: "2 (High)" },
+            { entity: "Fruit Flavors", score: "1 (Medium)" },
+            { entity: "Vapor Cloud", score: "1 (Medium)" }
+        ],
+        representativeCases: [
+            { id: "RC1 (AdSafety-Minor #89)", knowledge: "Flavored nicotine e-cigarette promotion targeting youth.", reason: "Uses cartoon characters to market restricted products to teens." }
+        ],
+        cotTrace: "1. SCGen Search: Detected vape pen and cartoon fruit visual tags.\n2. SCRA-MTI Assessment: Cross-referenced target age (13) with restricted nicotine category.\n3. RCR Search: Matched RC1 (Youth nicotine targeting violation).\n4. MLLM Decision: Rejection due to Minor Protection Policy violation."
     },
     misogyny: {
         text: "Tired of women driving? 🚗 Make sure she stays where she belongs. Get our automatic kitchen cooking helper and get your peace of mind back. Order now for your wife! #MenRule #KitchenHelper #Peace",
@@ -261,7 +311,20 @@ const templates = {
         ageCompliance: "CLEAN",
         hateSpeech: "FLAGGED",
         ocrText: "KEEP HER IN THE KITCHEN",
-        explanation: "Hate Speech & Gender Bias Violation. The text copy and OCR text contain derogatory gender stereotypes ('women drivers', 'stays where she belongs', 'keep her in the kitchen'). This violates community guidelines regarding misogynistic and offensive content targeting vulnerable gender groups."
+        explanation: "Hate Speech & Gender Bias Violation. The text copy and OCR text contain derogatory gender stereotypes ('women drivers', 'stays where she belongs', 'keep her in the kitchen'). This violates community guidelines regarding misogynistic and offensive content targeting vulnerable gender groups.",
+        blipCaption: "A woman behind a steering wheel beside a kitchen counter.",
+        nerEntities: ["Women Drivers", "Kitchen Helper", "MenRule"],
+        yoloObjects: ["woman", "steering wheel", "kitchen", "pointing hand"],
+        sckContext: "Socio-Cultural Knowledge (K): Tropes suggesting women belong exclusively in domestic roles or cannot drive represent derogatory misogynistic stereotypes.",
+        relevanceScores: [
+            { entity: "stays where she belongs", score: "2 (High)" },
+            { entity: "women driving", score: "2 (High)" },
+            { entity: "Kitchen", score: "1 (Medium)" }
+        ],
+        representativeCases: [
+            { id: "RC1 (MAMI-Misogyny #214)", knowledge: "Gender stereotype meme enforcing domestic subordination.", reason: "Satirizes female competence to promote gender discrimination." }
+        ],
+        cotTrace: "1. SCGen Search: Extracted gender stereotypes in text and OCR.\n2. SCRA-MTI Assessment: Evaluated metaphorical tenor (comparing women drivers to domestic tools).\n3. RCR Search: Matched MAMI dataset case RC1.\n4. MLLM Decision: Rejection under Misogyny & Hate Speech Policy."
     },
     safe: {
         text: "☕ Good Morning starts with Organic Coffee! ☕ Sourced directly from sustainable local farms, our dark roast coffee is rich, bold, and fair-trade certified. Visit our cafe or order beans online today. #CoffeeTime #Organic #Sustainable",
@@ -274,7 +337,19 @@ const templates = {
         ageCompliance: "CLEAN",
         hateSpeech: "CLEAN",
         ocrText: "ORGANIC & FRESH CAFE",
-        explanation: "Ad creative complies with all platform safety guidelines. Text and visual elements promote standard commercial products with neutral, positive sentiment and no policy violations detected."
+        explanation: "Ad creative complies with all platform safety guidelines. Text and visual elements promote standard commercial products with neutral, positive sentiment and no policy violations detected.",
+        blipCaption: "A white coffee mug on a wooden table with roasted coffee beans.",
+        nerEntities: ["Organic Coffee", "Fair-Trade", "CoffeeTime"],
+        yoloObjects: ["coffee mug", "coffee beans", "leaves", "table"],
+        sckContext: "Socio-Cultural Knowledge (K): Organic coffee and fair-trade farming represent standard, benign commercial beverage marketing.",
+        relevanceScores: [
+            { entity: "Organic Coffee", score: "1 (Medium)" },
+            { entity: "Fair-Trade", score: "1 (Medium)" }
+        ],
+        representativeCases: [
+            { id: "RC1 (Commercial #12)", knowledge: "Standard beverage retail advertising.", reason: "Promotes coffee beans with neutral product claims." }
+        ],
+        cotTrace: "1. SCGen Search: Extracted coffee beans and mug visual tags.\n2. SCRA-MTI Assessment: No high-risk policy flags found.\n3. RCR Search: Matched safe commercial retail cases.\n4. MLLM Decision: Approved for publication."
     }
 };
 
@@ -559,6 +634,59 @@ function updateDashboard(results) {
     const dashTag = document.getElementById('meme-overlay-tag');
     if (dashImg && results.imageSrc) dashImg.src = results.imageSrc;
     if (dashTag && results.imageTag) dashTag.textContent = results.imageTag;
+
+    // 11. Update Architecture Flow Inspector Nodes (Fig. 3 Trace)
+    const activeData = results.flowData || templates[activeTemplate] || templates.crypto;
+    
+    // Block A: SCGen Search Nodes
+    const blipEl = document.getElementById('flow-blip-caption');
+    const nerEl = document.getElementById('flow-ner-tags');
+    const yoloEl = document.getElementById('flow-yolo-tags');
+    const sckEl = document.getElementById('flow-sck-context');
+    
+    if (blipEl) blipEl.textContent = activeData.blipCaption || `"${results.text.substring(0, 60)}..."`;
+    if (nerEl) {
+        const tags = activeData.nerEntities || [results.category.toUpperCase(), "Metadata Tag"];
+        nerEl.innerHTML = tags.map(t => `<span>${t}</span>`).join('');
+    }
+    if (yoloEl) {
+        const tags = activeData.yoloObjects || results.visuals.split(',').map(s => s.trim());
+        yoloEl.innerHTML = tags.map(t => `<span>${t}</span>`).join('');
+    }
+    if (sckEl) sckEl.textContent = activeData.sckContext || "Socio-Cultural Knowledge (K): Extracted visual and textual context parsed for policy compliance.";
+    
+    // Block B: SCRA-MTI Nodes
+    const flowOcrEl = document.getElementById('flow-ocr-text');
+    const flowRowsEl = document.getElementById('flow-relevance-rows');
+    if (flowOcrEl) flowOcrEl.textContent = results.ocrText || "NO GRAPHIC TEXT DETECTED";
+    if (flowRowsEl) {
+        const rels = activeData.relevanceScores || [{ entity: results.category, score: "2 (High)" }, { entity: "Visual Layout", score: "1 (Medium)" }];
+        flowRowsEl.innerHTML = rels.map(r => `<tr><td>${r.entity}</td><td>${r.score}</td></tr>`).join('');
+    }
+    
+    // Block C: RCR Nodes
+    const rcEl = document.getElementById('flow-rc-cases');
+    if (rcEl) {
+        const cases = activeData.representativeCases || [{ id: "RC1 (General Trust & Safety)", knowledge: "Historical violation database query.", reason: results.explanation }];
+        rcEl.innerHTML = cases.map(c => `
+            <div class="rc-case-card">
+                <div class="rc-case-header">${c.id}</div>
+                <p><strong>Knowledge:</strong> ${c.knowledge}</p>
+                <p class="rc-reason"><strong>Reason Metaphor:</strong> ${c.reason}</p>
+            </div>
+        `).join('');
+    }
+    
+    // Block D: MLLM Output Nodes
+    const cotEl = document.getElementById('flow-cot-trace');
+    const finalDecEl = document.getElementById('flow-final-decision');
+    const finalReasonEl = document.getElementById('flow-final-reason');
+    if (cotEl) cotEl.textContent = activeData.cotTrace || `1. SCGen Search: Extracted creative features.\n2. SCRA-MTI: Calculated risk score ${results.riskScore}%.\n3. Decision: ${results.decision}.`;
+    if (finalDecEl) {
+        finalDecEl.textContent = results.decision;
+        finalDecEl.className = 'flow-final-decision-badge ' + results.decision.toLowerCase();
+    }
+    if (finalReasonEl) finalReasonEl.textContent = results.explanation;
 }
 
 function updatePolicyBadge(id, status) {
